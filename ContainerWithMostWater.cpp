@@ -4,6 +4,13 @@ n vertical lines are drawn such that the two endpoints of line i is at (i, ai) a
 Find two lines, which together with x-axis forms a container, such that the container contains the most water.
 
 Note: You may not slant the container and n is at least 2.
+
+The aim is to maximize the area formed between the vertical lines.
+The area of any container is calculated using the shorter line as length and the distance between the lines as the width of the rectangle.
+Area = length of shorter vertical line * distance between lines
+We can definitely get the maximum width container as the outermost lines have the maximum distance between them. 
+However, this container might not be the maximum in size as one of the vertical lines of this container could be really short.
+
 */
 
 
