@@ -3,8 +3,6 @@ Given a binary string S (a string consisting only of '0' and '1's) and a positiv
 if and only if for every integer X from 1 to N, the binary representation of X is a substring of S.
 """
 
-
-
 class Solution:
    
     def queryString(self, S: str, N: int) -> bool:
