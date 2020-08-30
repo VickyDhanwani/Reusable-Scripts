@@ -10,3 +10,16 @@ where A.Salary >= all(select B.Salary from Employee as B where B.DepartmentId = 
 
 select Name as Customers from Customers as C
 where C.Id not in (select O.CustomerId from Orders as O);
+
+/*
+Write an SQL query to find all dates' id with higher temperature compared to its previous dates (yesterday).
+Return the result table in any order.
+
+Problem URL : https://leetcode.com/problems/rising-temperature/
+*/
+
+SELECT A.id
+from Weather as A
+where A.Temperature > (select B.Temperature
+                     from Weather as B
+                     where DATEDIFF(A.recordDate, B.recordDate) = 1);
