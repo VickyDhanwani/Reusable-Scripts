@@ -1,4 +1,4 @@
-# LeetcodeProblems
+# About this
 This repository gives solution for variety of problems on leetcode and these solution are purely designed by me.
 
 
