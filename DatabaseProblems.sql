@@ -23,3 +23,18 @@ from Weather as A
 where A.Temperature > (select B.Temperature
                      from Weather as B
                      where DATEDIFF(A.recordDate, B.recordDate) = 1);
+
+
+/*
+Write a SQL query to get the second highest salary from the Employee table.
+
+*/
+
+# Write your MySQL query statement below
+select MAX(C.Salary) as SecondHighestSalary
+from Employee as C
+where C.Salary = (
+    Select MAX(A.Salary)
+    from Employee as A
+    where A.Salary < (select Max(B.Salary) from Employee as B)
+);
