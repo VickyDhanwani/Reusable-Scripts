@@ -90,9 +90,6 @@ s consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+
 class Solution {
 public:
     int myAtoi(string s) {
-        if(s.compare("00000-42a1234") == 0) {
-            return 0;
-        }
         
         string numbers;
         int i, j;
