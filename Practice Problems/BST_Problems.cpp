@@ -73,6 +73,96 @@ class BST {
             }
             return 0;
         }
+        int bst_delete(int k) {
+            Node *x = root;
+            Node *y = x;
+            Node *z, *w;
+            int dir = 0;
+            while(x != NULL) {
+                if(x->val == k) {
+                    break;
+                }
+                if(k > x->val) {
+                    y = x;
+                    dir = 1;
+                    x = x->right;
+                }
+                else if(k < x->val) {
+                    y = x;
+                    dir = 0;
+                    x = x->left;
+                }
+            }
+            if(x == NULL) {
+                return -1;
+            }
+            if(x->left == NULL && x->right == NULL) {
+               if(x == root) {
+                   root = NULL;
+               } 
+               else {
+                   if(dir == 0) {
+                       y->left = NULL;
+                   }
+                   else if(dir == 1) {
+                       y->right = NULL;
+                   }
+               }
+            }
+            if(x->left == NULL && x->right != NULL) {
+                if(x == root) {
+                    root = x->right;
+                }
+                else {
+                    if(dir == 0) {
+                        y->left = x->right;
+                    }
+                    else if(dir == 1) {
+                        y->right = x->right;
+                    }
+                }
+            }
+            if(x->left != NULL && x->right == NULL) {
+                if(x == root) {
+                    root = x->left;
+                }
+                else {
+                    if(dir == 0) {
+                        y->right = x->left;
+                    }
+                    else if(dir == 1) {
+                        y->right = x->left;
+                    }
+                }
+            }  
+            if(x->left != NULL && x->right != NULL) {
+                w = x->left;
+                z = w;
+                if(w->right == NULL && w->left != NULL) {
+                    x->val = w->val;
+                    x->left = w->left;
+                }
+                else if(w->right == NULL && w->left == NULL) {
+                    x->val = w->val;
+                    x->left = NULL;
+                }
+                else {
+                    while(w->right != NULL) {
+                        z = w;
+                        w = w->right;
+                    }
+                    x->val = w->val;
+                    if(w->left != NULL) {
+                        z->right = w->left;
+                    }
+                    else {
+                        z->right = NULL;
+                    }
+                }
+                
+            }
+            return 1;
+        }
 };
 
 void inorder_traversal(Node *x) {
@@ -82,6 +172,8 @@ void inorder_traversal(Node *x) {
     cout<<x->val<<" ";
     inorder_traversal(x->right);
 }
+
+
 
 int main() {
     BST b;
@@ -93,6 +185,19 @@ int main() {
     b.bst_insert(7);
     b.bst_insert(30);
     //cout<<b.is_empty();
+    inorder_traversal(b.getRoot());
+    cout<<endl;
+    b.bst_delete(7);
+    inorder_traversal(b.getRoot());
+    cout<<endl;
+    b.bst_delete(15);
+    inorder_traversal(b.getRoot());
+    cout<<endl;
+    b.bst_delete(25);
+    inorder_traversal(b.getRoot());
+    cout<<endl;
+    b.bst_delete(45);
     inorder_traversal(b.getRoot());    
+    cout<<endl;
     return 0;
 } 
