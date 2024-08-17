@@ -76,7 +76,58 @@ class LinkedList {
             head = Reverse(); 
             
         }
+        void InsertAt(int pos, int val) {
+            if(pos - 1 > getLength()) return;
+            Node *temp = head;
+            Node *new_node = new Node();
+            new_node->val = val;
+            new_node->next = NULL;
+            if(pos == 1) {
+                if(head == NULL) {
+                    head = new_node;
+                    return;
+                }
+                new_node->next = head;
+                head = new_node;
+                return;
+            }
+            while(pos > 2) {
+                temp = temp->next;
+                pos--;
+            }
+            new_node->next = temp->next;
+            temp->next = new_node;
+        }
         
+        void pop() {
+            if(head == NULL) return;
+            if(head->next == NULL) {
+                head = NULL;
+                return;
+            }
+            Node *t = head;
+            while(t->next->next) {
+                t = t->next;
+            }
+            t->next = NULL;
+        }
+        void RemoveAt(int pos) {
+            if(pos > getLength() || pos < 1) return;
+            if(pos == 1) {
+                head = head->next;
+                return;
+            }
+            Node *t = head;
+            while(pos > 2) {
+                t = t->next;
+                pos--;
+            }
+            if(t->next->next) {
+                t->next = t->next->next;
+                return;
+            }
+            t->next = NULL;
+        }
 };
 
 int main() {
@@ -93,7 +144,13 @@ int main() {
     cout<<ll.getLength()<<endl;
     ll.PrintReverse();
     ll.PrintList();
-   
+    ll.InsertAt(5, 7);
+    ll.pop();
+    ll.PrintList(); // 5 10 15 20
+    ll.RemoveAt(1); // 10 ,15, 20
+    ll.RemoveAt(3); // 10 15
+    ll.RemoveAt(1); // 
+    ll.PrintList();
     return 0;
 
 }
