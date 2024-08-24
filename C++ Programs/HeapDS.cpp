@@ -1,115 +1,108 @@
-#include <bits/stdc++.h>
-using namespace std;
+class Solution {
+public:
 
-// heap 
-// 1. Complete Binary Tree
-// 2. Min Heap - Value if Children is greater than its parent
-// Array Method
-// Assume Array is a Tree
-// Root = arr[0]
-// L & R Child of root = arr[1] && arr[2]
-// L & R child of node n = arr[2n + 1] & arr[ 2n + 2 ]
-// Parent of any Node = n - 1 / 2;
-// L & R of node 1 = arr[3] & arr[4]
-// Arr = []
-// Insert 2 => [2]
-// Insert 4 => [2, 4]
-//Insert 6 => [2, 4, 6]
-
-//Insert 1 => [2 , 4, 6 , 1]
-//Evalute => 1 < 4 => swap 1 & 4 => [2 , 1, 6, 4]
-//Evalute => 1 < 2 => swap 1 & 2 => [1, 2, 6, 4]
-
-// GetTop => send root => 1
-// Replace root with last
-// New Root = min(left, right) => [4, 2 , 6]
-//Check if heap condition satisfied from root to child => [2, 4, 6]
-
-void PrintHeap(vector<int> &hp) {
-    for(int i = 0; i < hp.size(); i++) {
-        cout<<hp[i]<<" ";
+    void swap( int  *a , int *b) {
+        int x;
+        x = *a;
+        *a = *b;
+        *b = x;
     }
-    cout<<endl;
-}
 
-void HeapInsert(vector<int> &hp, int val) {
-    hp.push_back(val);
-    int child = hp.size() - 1;
-    int parent = (child - 1) / 2;
-    int x;
-    PrintHeap(hp);
-    while(child > 0) {
-        if(hp[child] < hp[parent]) {
-          x = hp[child];
-          hp[child] = hp[parent];
-          hp[parent] = x;
-          PrintHeap(hp);
-        }
-        child = parent;
-        parent = (child - 1) / 2;
+    void HeapInsert(vector<int> &hp, int val) {
+        hp.push_back(val);
+        int child = hp.size() - 1;
+
+        int parent = (child - 1) / 2;
         
+        while(child >= 0) {
+            if(hp[child] > hp[parent]) {
+                swap(&hp[child], &hp[parent]);
+            }
+            else {
+                break;
+            }
+            child = parent;
+            parent = (parent - 1) / 2;
+        }
     }
-    
-    cout<<"Inserted "<<val<<endl;
-    
-}
-
-int removeMinimum(vector<int> &hp) {
-    if(hp.size() <= 0) return -1;
-    int min_val = hp[0];
-    int x, n, p, lc, rc;
-    n = hp.size() - 1;
-    hp[0] = hp[n];
-    hp.pop_back();
-    p = 0;
-    
-        lc = (2*p) + 1;
-    
-    
-        rc = (2 * p) + 2;
-    
-    //PrintHeap(hp);
-    // Initiak = p = 0 , lc = 1, rc = 2
-    while(lc < n || rc < n) {
-        if(lc < n && hp[lc] <= hp[p]) {
-            x = hp[p];
-            hp[p] = hp[lc];
-            hp[lc] = x;
-            p = lc;
-            //PrintHeap(hp);
+    int getMax(vector<int> &hp) {
+        if(hp.size() <= 0) return -1;
+        int max_val = hp[0];
+        hp[0] = hp[hp.size() - 1];
+        hp.pop_back();
+        int new_size = hp.size();
+        int parent, left_child, right_child;
+        parent = 0;
+        left_child = (2 * parent) + 1;
+        right_child = (2 * parent) + 2;
+        while(left_child < new_size || right_child < new_size) {
+            if(left_child < new_size && right_child < new_size && hp[left_child] > hp[parent] && hp[right_child] > hp[parent]) {
+                if(hp[left_child] > hp[right_child]) {
+                    swap(&hp[left_child], &hp[parent]);
+                    parent = left_child;
+                }
+                else {
+                    swap(&hp[right_child], &hp[parent]);
+                    parent = right_child;
+                }
+            }
+            else if(left_child < new_size && hp[left_child] > hp[parent] ) {
+                swap(&hp[left_child], &hp[parent]);
+                parent = left_child;
+            }   
+            else if(right_child < new_size && hp[right_child] > hp[parent]) {
+                swap(&hp[right_child], &hp[parent]);
+                parent = right_child;
+            }
+            else {
+                break;
+            }
+            left_child = (2 * parent) + 1;
+            right_child = (2 * parent) + 2;
         }
-        else if(rc < n && hp[rc] < hp[p]){
-            x = hp[p];
-            hp[p] = hp[rc];
-            hp[rc] = x;
-            p = rc;
-            //PrintHeap(hp);
-        }
-        else {
-            break;
-        }
-        lc = (2 * p) + 1;
-        rc = (2 * p) + 2;  
-        //cout<<p<<" "<<lc<<" "<<rc<<endl;
+        return max_val;
     }
-    return min_val;
-}
+    vector<string> findRelativeRanks(vector<int>& score) {
+        vector<int> hp;
+        for(int i = 0; i < score.size(); i++) {
+            HeapInsert(hp, score[i]);
 
-int main() {
-    vector<int> hp;
-    int p, lc, rc;
-    HeapInsert(hp, 2);
-    HeapInsert(hp, 4);
-    HeapInsert(hp, 6);
-    HeapInsert(hp, 1);
-    HeapInsert(hp, 3);
-    cout<<removeMinimum(hp)<<endl;
-    cout<<removeMinimum(hp)<<endl;
-    cout<<removeMinimum(hp)<<endl;
-    cout<<removeMinimum(hp)<<endl;
-    cout<<removeMinimum(hp)<<endl;
-    cout<<removeMinimum(hp)<<endl;
-    cout<<endl;
-	// your code goes here
-    return 0;
-}
+        }
+
+        vector<string> result;
+        map<int, string> mp;
+        int heap_size = hp.size();
+        int i = 0;
+        while(i < heap_size) {
+            int max_val = getMax(hp);
+            //cout<<max_val<<" "<<to_string(i + 1)<<endl;
+            if(i == 0) {
+                mp[max_val] = "Gold Medal";
+            }
+            else if(i == 1) {
+                mp[max_val] = "Silver Medal";
+            }
+            else if(i == 2) {
+                mp[max_val] = "Bronze Medal";
+            }
+            else {
+                mp[max_val] = to_string((i +  1));
+                
+            }
+            i++;
+        }
+        for(int i = 0; i < score.size(); i++) {
+            result.push_back(mp[score[i]]);
+        }
+        
+        
+        return result;
+        //
+        /*
+        For first heap remove, insert gold in reult  
+        For second heap remove insert silver
+        For third heap remove insert bronze
+        For fourth heap remove insert the same number
+        */
+    }
+};
