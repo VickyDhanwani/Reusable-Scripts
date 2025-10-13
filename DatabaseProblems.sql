@@ -58,3 +58,18 @@ BEGIN
       LIMIT 1 OFFSET k
   );
 END
+
+
+/*
+Top 5 products by total sales per region
+*/
+
+with cte as (
+  SELECT region, product, SUM(sales) as total_sales,
+  ROW_NUMBER() OVER (PARTITION by region order by SUM(sales) DESC) as rnk
+  from Sales 
+  group by region, product
+)
+select region, product, total_sales
+from cte
+where rnk <= 5
