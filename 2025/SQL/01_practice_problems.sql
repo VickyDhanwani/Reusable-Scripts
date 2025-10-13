@@ -88,3 +88,24 @@ WHERE Salary_Rank = 2
 
 -- 8 / 10
 
+-- Find Number of reactivated users
+-- Who were inactive in previous month by logged back in this month.
+
+-- Approach 3: Using window functions with LAG
+WITH user_monthly_activity AS (
+    SELECT DISTINCT 
+        user_id,
+        DATE_TRUNC('month', login_date) AS activity_month
+    FROM user_logins
+),
+user_activity_with_prev AS (
+    SELECT 
+        user_id,
+        activity_month,
+        LAG(activity_month) OVER (PARTITION BY user_id ORDER BY activity_month) AS prev_activity_month
+    FROM user_monthly_activity
+)
+SELECT COUNT(DISTINCT user_id) AS reactivated_users
+FROM user_activity_with_prev
+WHERE activity_month = DATE_TRUNC('month', CURRENT_DATE)
+  AND prev_activity_month < DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '1 month';
