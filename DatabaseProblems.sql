@@ -59,6 +59,8 @@ BEGIN
   );
 END
 
+I will give you sql query question in first prompt and then in next prompt will give you my answer. Evaluate my answer for FAANG level data engineer out of 10.
+Highlight improvements.
 
 /*
 Top 5 products by total sales per region
@@ -73,3 +75,145 @@ with cte as (
 select region, product, total_sales
 from cte
 where rnk <= 5
+
+/*
+Rating 8.5 Perplexity , 8.5 GPT , 8 Claude
+Answer Query 
+*/
+
+WITH cte AS (
+  SELECT 
+    region, 
+    product, 
+    SUM(COALESCE(sales, 0)) as total_sales,
+    DENSE_RANK() OVER (
+      PARTITION BY region 
+      ORDER BY SUM(COALESCE(sales, 0)) DESC
+    ) as rnk
+  FROM Sales 
+  WHERE sales IS NOT NULL  -- Filter bad data early
+  GROUP BY region, product
+)
+SELECT 
+  region, 
+  product, 
+  total_sales,
+  rnk  -- Optional: show rank for clarity
+FROM cte
+WHERE rnk <= 5
+ORDER BY region, rnk;  -- Consistent output ordering
+
+/*
+Orders where shipping took longer than the monthly average
+*/
+with monthly_average as (
+  Select DATE_PART(YEAR, CAST(OrderDate AS DATETIME)) as OrderYear, 
+    DATE_PART(MONTH, CAST(OrderDate as DATETIME)) as OrderMonth,
+    AVG(DATEDIFF(DAY, CAST(OrderDate as DATETIME), CAST(DeliveryDate as DATETIME))) as AverageDeliveryTime
+    from Orders
+    GROUP BY DATE_PART(YEAR,  CAST(OrderDate as DATETIME)), DATE_PART(MONTH, CAST(OrderDate as DATETIME))
+)
+Select o.OrderId, o.OrderName, o.OrderDetails
+from Orders as o
+where Exists (
+  Select 1
+  from monthly_average as mavg
+  where mavg.OrderYear = DATE_PART(YEAR, CAST(o.OrderDate as DATETIME)) 
+  and mavg.OrderMonth = DATE_PART(MONTH, CAST(o.OrderDate as DATETIME))
+  and DATEDIFF(DAY, CAST(o.OrderDate as DATETIME), CAST(o.DeliveryDate as DATETIME)) > mavg.AverageDeliveryTime
+)
+
+
+/*
+Rating - 7.5 Perplexity , 8.8 GPT , 6.5 Claude
+Answer Query
+*/
+
+WITH cleaned_orders AS (
+  SELECT 
+    OrderId,
+    OrderName,
+    OrderDetails,
+    CAST(OrderDate AS DATETIME) AS order_dt,
+    CAST(DeliveryDate AS DATETIME) AS delivery_dt,
+    DATE_PART('YEAR', CAST(OrderDate AS DATETIME)) AS order_year,
+    DATE_PART('MONTH', CAST(OrderDate AS DATETIME)) AS order_month
+  FROM Orders
+  WHERE DeliveryDate IS NOT NULL
+    AND DeliveryDate >= OrderDate  -- Data quality check
+),
+shipping_duration AS (
+  SELECT 
+    *,
+    DATEDIFF('DAY', order_dt, delivery_dt) AS shipping_days
+  FROM cleaned_orders
+),
+monthly_avg AS (
+  SELECT 
+    order_year,
+    order_month,
+    AVG(shipping_days) AS avg_shipping_days
+  FROM shipping_duration
+  GROUP BY order_year, order_month
+)
+SELECT 
+  s.OrderId,
+  s.OrderName,
+  s.order_dt,
+  s.delivery_dt,
+  s.shipping_days AS actual_shipping_days,
+  m.avg_shipping_days AS monthly_avg_days,
+  ROUND(s.shipping_days - m.avg_shipping_days, 2) AS days_over_avg
+FROM shipping_duration s
+INNER JOIN monthly_avg m
+  ON s.order_year = m.order_year
+  AND s.order_month = m.order_month
+WHERE s.shipping_days > m.avg_shipping_days
+ORDER BY s.order_year, s.order_month, days_over_avg DESC;
+
+Give all answers in single piece of code, no explanation needed, just most optimized answer
+/*
+Recursive query: list all subordinates for a manager
+*/
+
+with Recursive subordinates as (
+  select e.name,
+  e.id,
+  e.manager_id,
+  0 as level
+  from employees as e
+  where e.id = :managers_employee_id
+
+  union all
+
+  select e.name,
+  e.id,
+  e.manager_id,
+  s.level + 1 as level
+  from employees as e
+  inner join subordinates as s on e.manager_id = s.id
+)
+select name, id, manager_id, level
+from subordinates
+order by level, id
+
+/*
+Deduplicate a huge table while keeping only the latest record
+*/
+MERGE INTO employee t
+USING (
+  SELECT 
+    id,
+    name,
+    email,
+    gender,
+    load_update_timestamp,
+    ROW_NUMBER() OVER (
+      PARTITION BY id 
+      ORDER BY CAST(load_update_timestamp AS TIMESTAMP) DESC
+    ) AS rn
+  FROM employee
+) s
+ON t.id = s.id 
+  AND t.load_update_timestamp = s.load_update_timestamp
+WHEN MATCHED AND s.rn > 1 THEN DELETE;
