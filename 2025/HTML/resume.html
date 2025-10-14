@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vikram Dhanwani - Data Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #ffffff;
+        }
+        
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 15px 50px 15px;
+            position: relative;
+        }
+        
+        .name {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 5px;
+        }
+        
+        .title {
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            opacity: 0.95;
+            margin-bottom: 12px;
+        }
+        
+        .contact-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            font-size: 11px;
+            opacity: 0.95;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .contact-item::before {
+            content: '|';
+            font-size: 12px;
+            margin-right: 5px;
+            opacity: 0.6;
+        }
+        
+        .contact-item:first-child::before {
+            content: '';
+            margin: 0;
+        }
+        
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .main-content {
+            padding: 30px 50px 40px;
+        }
+        
+        .section {
+            margin-bottom: 22px;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e3c72;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 16px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #e8f0fe;
+            position: relative;
+        }
+        
+        .section-title::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+        
+        .summary-text {
+            font-size: 11.5px;
+            line-height: 1.7;
+            color: #34495e;
+            text-align: justify;
+        }
+        
+        .certifications {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: #f8f9fa;
+            border-left: 3px solid #2a5298;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: #1e3c72;
+        }
+        
+        .skills-container {
+            display: grid;
+            gap: 9px;
+        }
+        
+        .skill-row {
+            display: flex;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+        
+        .skill-label {
+            font-weight: 700;
+            color: #1e3c72;
+            min-width: 170px;
+            flex-shrink: 0;
+        }
+        
+        .skill-items {
+            color: #34495e;
+        }
+        
+        .experience-item {
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 18px;
+        }
+        
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 7px;
+            height: 7px;
+            background: #2a5298;
+            border-radius: 50%;
+        }
+        
+        .company-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 3px;
+        }
+        
+        .company-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+        
+        .location {
+            font-size: 10.5px;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        .role-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 7px;
+        }
+        
+        .role-title {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-style: italic;
+        }
+        
+        .dates {
+            font-size: 10.5px;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+        
+        .role-description {
+            font-size: 10.5px;
+            color: #555;
+            margin-bottom: 7px;
+            font-style: italic;
+            line-height: 1.5;
+        }
+        
+        .achievements {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .achievements li {
+            font-size: 11px;
+            line-height: 1.6;
+            color: #34495e;
+            margin-bottom: 5px;
+            padding-left: 16px;
+            position: relative;
+            text-align: justify;
+        }
+        
+        .achievements li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #2a5298;
+            font-weight: bold;
+        }
+        
+        .education-box {
+            background: #f8f9fa;
+            padding: 14px 18px;
+            border-radius: 4px;
+            border-left: 3px solid #2a5298;
+        }
+        
+        .education-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+        
+        .degree {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+        
+        .edu-dates {
+            font-size: 10.5px;
+            color: #7f8c8d;
+        }
+        
+        .institution {
+            font-size: 10.5px;
+            color: #555;
+            margin-bottom: 7px;
+        }
+        
+        .project-text {
+            font-size: 10.5px;
+            color: #34495e;
+            line-height: 1.6;
+        }
+        
+        .additional-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            font-size: 10.5px;
+        }
+        
+        .additional-item {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .additional-label {
+            font-weight: 700;
+            color: #1e3c72;
+            min-width: 75px;
+        }
+        
+        .additional-value {
+            color: #34495e;
+        }
+        
+        .metrics-highlight {
+            background: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                max-width: 100%;
+            }
+            .header {
+                padding: 20px 40px 15px;
+            }
+            .main-content {
+                padding: 25px 40px 30px;
+            }
+        }
+        
+        @page {
+            margin: 0.5in;
+            size: letter;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="name">VIKRAM DHANWANI</div>
+            <div class="title">Data Engineer</div>
+            <div class="contact-bar">
+                <div class="contact-item">Pune, India</div>
+                <div class="contact-item">vickydhanwani11@gmail.com</div>
+                <div class="contact-item">+91-7350632588</div>
+                <div class="contact-item"><a href="https://linkedin.com/in/vikram-dhanwani">linkedin.com/in/vikram-dhanwani</a></div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="section">
+                <div class="section-title">Professional Summary</div>
+                <div class="summary-text">
+                    Data Engineer with 5 years of experience architecting and optimizing enterprise-scale cloud data platforms on Azure. Specialized in building high-performance ETL/ELT pipelines using Azure Data Factory, Databricks, and Delta Lake that process 10TB+ monthly while reducing costs and improving reliability. Proven track record of migrating legacy systems to modern lakehouse architectures, implementing CI/CD practices, and delivering data solutions that drive business intelligence for 500+ users. Expert in cost optimization, having delivered $200K+ in annual savings through strategic cloud migrations and infrastructure improvements.
+                </div>
+                <div class="certifications">
+                    Microsoft Certified: Azure Administrator Associate | Azure Solutions Architect Expert
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Technical Expertise</div>
+                <div class="skills-container">
+                    <div class="skill-row">
+                        <div class="skill-label">Data Engineering</div>
+                        <div class="skill-items">Azure Data Factory, Synapse Analytics, Databricks, Delta Lake, Apache Spark (PySpark), Data Modeling, ETL/ELT Pipelines, Lakehouse Architecture</div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-label">Cloud & Storage</div>
+                        <div class="skill-items">Azure Data Lake Gen2, Blob Storage, MySQL, Azure SQL Database, Cosmos DB (NoSQL), Azure Analysis Services</div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-label">Programming</div>
+                        <div class="skill-items">Python, SQL, PowerShell, Scala, DAX</div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-label">DevOps & Automation</div>
+                        <div class="skill-items">Azure DevOps, CI/CD Pipelines, YAML, Infrastructure as Code (IaC), Azure Functions, Logic Apps</div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-label">Analytics & BI</div>
+                        <div class="skill-items">Power BI (Premium, Large Datasets), REST APIs, Data Visualization, Semantic Modeling</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Professional Experience</div>
+
+                <div class="experience-item">
+                    <div class="company-header">
+                        <div class="company-name">SLB (Schlumberger)</div>
+                        <div class="location">Pune, India</div>
+                    </div>
+                    <div class="role-header">
+                        <div class="role-title">Data Engineer II</div>
+                        <div class="dates">Nov 2023 - Sep 2025</div>
+                    </div>
+                    <div class="role-description">
+                        Architected and delivered data engineering solutions for enterprise analytics platform serving 500+ users across multiple business units, driving cost optimization and operational efficiency.
+                    </div>
+                    <ul class="achievements">
+                        <li>Architected migration from SAP OData to REST API-based ingestion system, achieving near-real-time data freshness (from daily batches) and reducing extraction failures by <span class="metrics-highlight">85%</span> through improved error handling and retry mechanisms</li>
+                        <li>Re-engineered 90+ legacy Power BI dataflows into Azure Data Factory pipelines with Delta Lake storage, processing <span class="metrics-highlight">10TB+ monthly</span> while reducing ETL latency by <span class="metrics-highlight">30%</span> and enabling incremental refresh patterns for 200+ data assets</li>
+                        <li>Built comprehensive monitoring and analytics solution for Power BI Premium capacity utilization across 10 production workspaces, providing real-time visibility into resource consumption patterns and enabling <span class="metrics-highlight">$12K/month</span> in infrastructure rightsizing decisions</li>
+                        <li>Implemented passwordless authentication framework using Azure Managed Identity for Synapse Analytics and semantic models, eliminating credential rotation overhead and improving security compliance across 200+ data assets</li>
+                        <li>Designed lakehouse utilization analytics platform implementing medallion architecture (bronze/silver/gold) that ingests Log Analytics logs and activity events via REST APIs with PowerShell-based paginated extraction, converts to Parquet with temporal partitioning (<span class="metrics-highlight">80% storage reduction</span>), and delivers daily executive insights through star schema semantic model</li>
+                        <li>Improved semantic model refresh reliability by <span class="metrics-highlight">95%</span> (8 daily failures to 2 weekly) through OAuth2 token regeneration mechanism for long-running operations, ServiceNow integration via Logic Apps REST API for automated incident creation, reducing incident response time from 2 days to 8 hours</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="role-header">
+                        <div class="role-title">Data Engineer</div>
+                        <div class="dates">Mar 2022 - Nov 2023</div>
+                    </div>
+                    <div class="role-description">
+                        Led cloud infrastructure optimization initiatives and data platform migrations to improve cost efficiency and performance.
+                    </div>
+                    <ul class="achievements">
+                        <li>Redesigned Azure Analysis Services logging pipeline by migrating ETL logic from dedicated SQL pool to Synapse Analytics serverless compute, reducing SQL pool costs by <span class="metrics-highlight">25%</span> and query volume by <span class="metrics-highlight">35%</span> through optimized processing patterns</li>
+                        <li>Successfully decommissioned 5 Azure Analysis Services instances by migrating 11 tabular models (500M+ rows) to Power BI Premium Large Datasets, eliminating <span class="metrics-highlight">$20K monthly</span> infrastructure costs while maintaining sub-second query performance</li>
+                        <li>Optimized business-critical data warehouse queries from 60 minutes to 2 minutes <span class="metrics-highlight">(97% improvement)</span> by migrating distribution strategy from round-robin to hash distribution on high-cardinality keys, implementing clustered columnstore indexes, and automating statistics updates in ETL pipeline for sustained performance</li>
+                        <li>Developed custom monitoring solution using Azure Functions and Power BI REST APIs to track health metrics across 10 Premium capacities and 8 on-premises gateways, reducing incident detection time by <span class="metrics-highlight">40%</span> and enabling proactive capacity management</li>
+                        <li>Automated 20 operational workflows using Azure Functions, Logic Apps, and Power Automate, eliminating <span class="metrics-highlight">10 hours weekly</span> of manual data refresh, validation, and reporting tasks</li>
+                        <li>Deployed Microsoft Purview sensitivity labels across enterprise Power BI tenant with mandatory labeling policies for all published reports, standardizing data classification compliance across organization</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="role-header">
+                        <div class="role-title">Associate Data Engineer</div>
+                        <div class="dates">Oct 2020 - Feb 2022</div>
+                    </div>
+                    <div class="role-description">
+                        Established DevOps practices and automated deployment pipelines for data infrastructure, driving efficiency and cost optimization.
+                    </div>
+                    <ul class="achievements">
+                        <li>Spearheaded migration from per-user licensing to Enterprise Shared Capacity model for Power BI Premium, consolidating workloads and reducing annual licensing costs by <span class="metrics-highlight">$200K</span> through strategic capacity planning</li>
+                        <li>Implemented CI/CD pipelines in Azure DevOps for 50+ data projects (Azure Data Factory, Synapse Analytics, Power BI), reducing deployment time from 2-3 days to 2-4 hours and eliminating manual deployment errors through automated validation</li>
+                        <li>Developed centralized infrastructure monitoring dashboard using PowerShell, Azure Data Factory, and Power Platform, providing unified view of pipeline health and reducing troubleshooting time by <span class="metrics-highlight">15%</span></li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="role-header">
+                        <div class="role-title">Software Development Intern</div>
+                        <div class="dates">May 2019 - Jul 2019</div>
+                    </div>
+                    <ul class="achievements">
+                        <li>Built real-time drilling operations dashboard using Angular and .NET Core, integrating with SQL Server to display live sensor data from field operations and reducing manual data retrieval time by <span class="metrics-highlight">70%</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Education</div>
+                <div class="education-box">
+                    <div class="education-header">
+                        <div class="degree">Bachelor of Technology in Information Technology</div>
+                        <div class="edu-dates">Aug 2016 - Aug 2020 | CGPA: 8.46</div>
+                    </div>
+                    <div class="institution">College of Engineering, Pune (COEP)</div>
+                    <div class="project-text">
+                        <strong>Capstone Project:</strong> Designed and implemented NLP-based text classification system using scikit-learn and Python to automatically categorize police complaints by crime type. Trained on dataset of 5,000+ labeled complaints, achieving 94% accuracy through feature engineering and ensemble methods.
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Additional Information</div>
+                <div class="additional-grid">
+                    <div class="additional-item">
+                        <div class="additional-label">Languages:</div>
+                        <div class="additional-value">English (Fluent), Hindi (Native)</div>
+                    </div>
+                    <div class="additional-item">
+                        <div class="additional-label">Interests:</div>
+                        <div class="additional-value">Data Architecture, Distributed Systems, Cloud Cost Optimization</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
