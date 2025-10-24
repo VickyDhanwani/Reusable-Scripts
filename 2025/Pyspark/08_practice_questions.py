@@ -55,3 +55,4 @@ schema = StructType([
 df = spark.read.format("csv").schema(schema).option("header", "True").load("dbfs:/raw/data/orders.csv")
 df = df.withColumn("total_amount", round(col("quantity") * col("price"), 2)).groupBy("customer_id").agg(agg_sum("total_amount").alias("total_spending")).orderBy(col("total_spending").desc())
 df.show()
+
