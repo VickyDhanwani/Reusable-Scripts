@@ -1,1123 +1,948 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vikram Dhanwani - Data Engineer & SRE Portfolio</title>
+    <title>Vikram Dhanwani | Cloud Data Architect</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Space+Grotesk:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: 'Inter', 'Segoe UI', sans-serif;
-        line-height: 1.6;
-        color: #2c3e50;
-        background: #0a0e1a;
-        overflow-x: hidden;
-      }
-
-      /* Hero Section */
-      .hero {
-        min-height: 100vh;
-        background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 50%, #2a3555 100%);
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-      }
-
-      .hero::before {
-        content: '';
-        position: absolute;
-        width: 200%;
-        height: 200%;
-        background:
-          radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
-        animation: bgPulse 15s ease-in-out infinite;
-      }
-
-      @keyframes bgPulse {
-
-        0%,
-        100% {
-          transform: scale(1) rotate(0deg);
+        :root {
+            --bg-dark: #050a14;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.07);
+            --primary: #00f2ff; /* Cyan for Data */
+            --secondary: #7000ff; /* Purple for Cloud */
+            --accent: #ff0055; /* Pink for Alerts/SRE */
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --nav-bg: rgba(5, 10, 20, 0.85);
         }
 
-        50% {
-          transform: scale(1.1) rotate(5deg);
-        }
-      }
-
-      .hero-content {
-        text-align: center;
-        z-index: 1;
-        padding: 2rem;
-        animation: fadeInUp 1s ease-out;
-      }
-
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .hero h1 {
-        font-size: 4.5rem;
-        font-weight: 900;
-        background: linear-gradient(135deg, #60a5fa, #a855f7, #ec4899);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 1rem;
-        letter-spacing: -3px;
-      }
-
-      .hero h2 {
-        font-size: 1.5rem;
-        color: #94a3b8;
-        font-weight: 300;
-        margin-bottom: 0.5rem;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-      }
-
-      .hero-subtitle {
-        font-size: 1.1rem;
-        color: #64748b;
-        max-width: 700px;
-        margin: 0 auto 2rem;
-        line-height: 1.8;
-      }
-
-      .hero-badges {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin: 2rem 0;
-      }
-
-      .badge {
-        background: rgba(59, 130, 246, 0.1);
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        padding: 0.5rem 1.5rem;
-        border-radius: 50px;
-        color: #60a5fa;
-        font-size: 0.9rem;
-        font-weight: 600;
-        backdrop-filter: blur(10px);
-      }
-
-      .hero-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 2rem;
-        max-width: 1000px;
-        margin: 3rem auto;
-      }
-
-      .stat {
-        text-align: center;
-        padding: 1.5rem;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
-      }
-
-      .stat:hover {
-        background: rgba(255, 255, 255, 0.05);
-        transform: translateY(-5px);
-      }
-
-      .stat-number {
-        font-size: 2.5rem;
-        font-weight: 700;
-        background: linear-gradient(135deg, #3b82f6, #a855f7);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        display: block;
-        margin-bottom: 0.5rem;
-      }
-
-      .stat-label {
-        color: #94a3b8;
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      .cta-buttons {
-        display: flex;
-        gap: 1.5rem;
-        justify-content: center;
-        margin-top: 3rem;
-        flex-wrap: wrap;
-      }
-
-      .btn {
-        padding: 1rem 2.5rem;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        display: inline-block;
-        font-size: 1rem;
-      }
-
-      .btn-primary {
-        background: linear-gradient(135deg, #3b82f6, #a855f7);
-        color: white;
-        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
-      }
-
-      .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
-      }
-
-      .btn-secondary {
-        background: rgba(255, 255, 255, 0.05);
-        color: white;
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-      }
-
-      .btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px);
-      }
-
-      .scroll-indicator {
-        position: absolute;
-        bottom: 2rem;
-        left: 50%;
-        transform: translateX(-50%);
-        animation: bounce 2s infinite;
-      }
-
-      @keyframes bounce {
-
-        0%,
-        20%,
-        50%,
-        80%,
-        100% {
-          transform: translateX(-50%) translateY(0);
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            line-height: 1.6;
+            width: 100%;
         }
 
-        40% {
-          transform: translateX(-50%) translateY(-10px);
+        /* --- Dynamic Background --- */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 90%);
+            pointer-events: none;
         }
 
-        60% {
-          transform: translateX(-50%) translateY(-5px);
-        }
-      }
-
-      .scroll-indicator span {
-        display: block;
-        width: 30px;
-        height: 50px;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 25px;
-        position: relative;
-      }
-
-      .scroll-indicator span::before {
-        content: '';
-        position: absolute;
-        top: 10px;
-        left: 50%;
-        width: 6px;
-        height: 6px;
-        background: white;
-        border-radius: 50%;
-        transform: translateX(-50%);
-        animation: scrollDot 2s infinite;
-      }
-
-      @keyframes scrollDot {
-        0% {
-          opacity: 1;
-          top: 10px;
+        .bg-glow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 80vw;
+            max-width: 600px;
+            max-height: 600px;
+            background: radial-gradient(circle, rgba(112, 0, 255, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: -1;
+            animation: pulseGlow 8s ease-in-out infinite alternate;
+            pointer-events: none;
         }
 
-        100% {
-          opacity: 0;
-          top: 30px;
-        }
-      }
-
-      /* Navigation */
-      nav {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background: rgba(10, 14, 26, 0.9);
-        backdrop-filter: blur(10px);
-        z-index: 100;
-        padding: 1rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      nav ul {
-        list-style: none;
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        flex-wrap: wrap;
-        padding: 0 2rem;
-      }
-
-      nav a {
-        color: #94a3b8;
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.3s;
-        padding: 0.5rem 1rem;
-        position: relative;
-      }
-
-      nav a::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        width: 0;
-        height: 2px;
-        background: linear-gradient(90deg, #3b82f6, #a855f7);
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
-      }
-
-      nav a:hover {
-        color: #3b82f6;
-      }
-
-      nav a:hover::after {
-        width: 80%;
-      }
-
-      /* Section Styles */
-      section {
-        padding: 6rem 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-
-      .section-title {
-        font-size: 3rem;
-        font-weight: 800;
-        color: white;
-        margin-bottom: 1rem;
-        text-align: center;
-        position: relative;
-      }
-
-      .section-subtitle {
-        text-align: center;
-        color: #64748b;
-        font-size: 1.1rem;
-        margin-bottom: 4rem;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .section-title::after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100px;
-        height: 4px;
-        background: linear-gradient(90deg, #3b82f6, #a855f7);
-        border-radius: 2px;
-      }
-
-      /* About Section */
-      #about {
-        background: #0f1420;
-      }
-
-      .about-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem;
-        align-items: start;
-      }
-
-      .about-text {
-        background: rgba(255, 255, 255, 0.03);
-        padding: 2.5rem;
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .about-text p {
-        color: #cbd5e1;
-        font-size: 1.05rem;
-        line-height: 1.8;
-        margin-bottom: 1.5rem;
-      }
-
-      .about-highlights {
-        display: grid;
-        gap: 1.5rem;
-      }
-
-      .highlight-card {
-        background: rgba(59, 130, 246, 0.05);
-        padding: 2rem;
-        border-radius: 12px;
-        border-left: 4px solid #3b82f6;
-        transition: all 0.3s ease;
-      }
-
-      .highlight-card:hover {
-        background: rgba(59, 130, 246, 0.1);
-        transform: translateX(10px);
-      }
-
-      .highlight-card h3 {
-        color: #3b82f6;
-        margin-bottom: 0.5rem;
-        font-size: 1.2rem;
-      }
-
-      .highlight-card p {
-        color: #94a3b8;
-        font-size: 0.95rem;
-        line-height: 1.6;
-      }
-
-      .certifications {
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(168, 85, 247, 0.1));
-        padding: 2rem;
-        border-radius: 12px;
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        margin-top: 2rem;
-      }
-
-      .certifications h3 {
-        color: #60a5fa;
-        margin-bottom: 1rem;
-        font-size: 1.2rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .certifications h3::before {
-        content: '🏆';
-        font-size: 1.5rem;
-      }
-
-      .cert-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .cert-item {
-        color: #cbd5e1;
-        padding-left: 1.5rem;
-        position: relative;
-      }
-
-      .cert-item::before {
-        content: '✓';
-        position: absolute;
-        left: 0;
-        color: #4ade80;
-        font-weight: bold;
-      }
-
-      /* Skills Section */
-      #skills {
-        background: #1a1f35;
-      }
-
-      .skills-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 2rem;
-      }
-
-      .skill-card {
-        background: rgba(255, 255, 255, 0.03);
-        padding: 2.5rem;
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .skill-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: linear-gradient(90deg, #3b82f6, #a855f7);
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
-      }
-
-      .skill-card:hover::before {
-        transform: scaleX(1);
-      }
-
-      .skill-card:hover {
-        transform: translateY(-10px);
-        border-color: rgba(59, 130, 246, 0.5);
-        box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
-        background: rgba(255, 255, 255, 0.05);
-      }
-
-      .skill-icon {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-      }
-
-      .skill-card h3 {
-        color: #60a5fa;
-        margin-bottom: 1rem;
-        font-size: 1.4rem;
-      }
-
-      .skill-card p {
-        color: #cbd5e1;
-        line-height: 1.8;
-        font-size: 0.95rem;
-      }
-
-      /* Experience Section */
-      #experience {
-        background: #0f1420;
-      }
-
-      .timeline {
-        position: relative;
-        padding-left: 3rem;
-      }
-
-      .timeline::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 3px;
-        background: linear-gradient(180deg, #3b82f6, #a855f7, #ec4899);
-      }
-
-      .timeline-item {
-        position: relative;
-        margin-bottom: 4rem;
-        padding-left: 2rem;
-      }
-
-      .timeline-item::before {
-        content: '';
-        position: absolute;
-        left: -3.6rem;
-        top: 0;
-        width: 16px;
-        height: 16px;
-        background: #3b82f6;
-        border-radius: 50%;
-        box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.2);
-        animation: pulse 2s infinite;
-      }
-
-      @keyframes pulse {
-
-        0%,
-        100% {
-          box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.2);
+        @keyframes pulseGlow {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.8; }
         }
 
-        50% {
-          box-shadow: 0 0 0 10px rgba(59, 130, 246, 0.1);
-        }
-      }
-
-      .experience-card {
-        background: rgba(255, 255, 255, 0.03);
-        padding: 2.5rem;
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
-      }
-
-      .experience-card:hover {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(59, 130, 246, 0.3);
-      }
-
-      .experience-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: start;
-        margin-bottom: 1rem;
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-
-      .experience-header h3 {
-        color: white;
-        font-size: 1.8rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .experience-header .role {
-        color: #60a5fa;
-        font-size: 1.2rem;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .experience-header .dates {
-        color: #64748b;
-        font-size: 0.95rem;
-        background: rgba(59, 130, 246, 0.1);
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        white-space: nowrap;
-      }
-
-      .experience-description {
-        color: #94a3b8;
-        margin-bottom: 1.5rem;
-        font-style: italic;
-        padding: 1rem;
-        background: rgba(59, 130, 246, 0.05);
-        border-left: 3px solid #3b82f6;
-        border-radius: 4px;
-      }
-
-      .achievements {
-        list-style: none;
-      }
-
-      .achievements li {
-        color: #cbd5e1;
-        margin-bottom: 1.2rem;
-        padding-left: 2rem;
-        position: relative;
-        line-height: 1.7;
-        font-size: 0.98rem;
-      }
-
-      .achievements li::before {
-        content: '▸';
-        position: absolute;
-        left: 0;
-        color: #60a5fa;
-        font-weight: bold;
-        font-size: 1.2rem;
-      }
-
-      .metric {
-        background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(22, 163, 74, 0.2));
-        padding: 3px 10px;
-        border-radius: 6px;
-        font-weight: 700;
-        color: #4ade80;
-        border: 1px solid rgba(34, 197, 94, 0.3);
-      }
-
-      /* Awards Section */
-      #awards {
-        background: #1a1f35;
-      }
-
-      .awards-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-      }
-
-      .award-card {
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(168, 85, 247, 0.05));
-        padding: 2rem;
-        border-radius: 12px;
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        text-align: center;
-        transition: all 0.3s ease;
-      }
-
-      .award-card:hover {
-        transform: translateY(-5px);
-        border-color: rgba(59, 130, 246, 0.5);
-        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
-      }
-
-      .award-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-      }
-
-      .award-card h3 {
-        color: #60a5fa;
-        margin-bottom: 0.5rem;
-        font-size: 1.1rem;
-      }
-
-      .award-card p {
-        color: #94a3b8;
-        font-size: 0.9rem;
-      }
-
-      /* Contact Section */
-      #contact {
-        background: #0f1420;
-      }
-
-      .contact-intro {
-        text-align: center;
-        color: #cbd5e1;
-        font-size: 1.2rem;
-        margin-bottom: 3rem;
-        max-width: 700px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .contact-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 2rem;
-      }
-
-      .contact-card {
-        background: rgba(255, 255, 255, 0.03);
-        padding: 2.5rem;
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
-        text-align: center;
-      }
-
-      .contact-card:hover {
-        transform: translateY(-5px);
-        border-color: rgba(59, 130, 246, 0.5);
-        background: rgba(255, 255, 255, 0.05);
-      }
-
-      .contact-icon {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-      }
-
-      .contact-card h3 {
-        color: #60a5fa;
-        margin-bottom: 1rem;
-        font-size: 1.2rem;
-      }
-
-      .contact-card p {
-        color: #cbd5e1;
-        font-size: 1rem;
-      }
-
-      .contact-card a {
-        color: #60a5fa;
-        text-decoration: none;
-        transition: color 0.3s;
-      }
-
-      .contact-card a:hover {
-        color: #93c5fd;
-      }
-
-      /* Footer */
-      footer {
-        background: #020617;
-        padding: 3rem 2rem;
-        text-align: center;
-        color: #64748b;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      footer p {
-        margin-bottom: 1rem;
-      }
-
-      .footer-links {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        margin-top: 1rem;
-        flex-wrap: wrap;
-      }
-
-      .footer-links a {
-        color: #64748b;
-        text-decoration: none;
-        transition: color 0.3s;
-      }
-
-      .footer-links a:hover {
-        color: #3b82f6;
-      }
-
-      /* Responsive */
-      @media (max-width: 768px) {
-        .hero h1 {
-          font-size: 2.5rem;
+        /* --- Typography --- */
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
         }
 
-        .hero h2 {
-          font-size: 1.2rem;
+        .font-mono {
+            font-family: 'Space Grotesk', monospace;
         }
 
-        .hero-stats {
-          grid-template-columns: 1fr;
-        }
-
-        .cta-buttons {
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .section-title {
-          font-size: 2rem;
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: var(--nav-bg);
+            backdrop-filter: blur(16px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 600px;
         }
 
         nav ul {
-          gap: 1rem;
+            display: flex;
+            justify-content: space-between;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
         }
 
-        .about-content {
-          grid-template-columns: 1fr;
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            white-space: nowrap;
         }
 
+        nav a:hover, nav a.active {
+            color: var(--bg-dark);
+            background: var(--primary);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 60px; /* Top padding accounts for nav */
+            position: relative;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+            width: 100%;
+        }
+
+        .hero h2 {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .hero-subtitle {
+            max-width: 600px;
+            color: var(--text-muted);
+            font-size: clamp(1rem, 1.2vw, 1.2rem);
+            margin: 0 auto 40px;
+            padding: 0 10px;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .badge {
+            background: rgba(0, 242, 255, 0.05);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* --- 3D Stats Cards --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+            perspective: 1000px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: var(--glass-border);
+            padding: 25px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.1s;
+            transform-style: preserve-3d;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin-bottom: 5px;
+            transform: translateZ(20px);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transform: translateZ(10px);
+            display: block;
+        }
+
+        /* --- General Section Styles --- */
+        section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* --- Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- About Section --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            align-items: start;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .certifications {
+            margin-top: 30px;
+            border: 1px solid var(--primary);
+            padding: 20px;
+            border-radius: 12px;
+            background: rgba(0,242,255,0.05);
+        }
+
+        .highlight-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .highlight-item {
+            background: linear-gradient(90deg, rgba(255,255,255,0.03), transparent);
+            padding: 20px;
+            border-left: 3px solid var(--primary);
+            border-radius: 0 10px 10px 0;
+            transition: 0.3s;
+        }
+
+        /* --- Skills Section --- */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            border: var(--glass-border);
+            padding: 25px;
+            border-radius: 16px;
+            transition: 0.3s;
+        }
+
+        .skill-card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(0, 242, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.1);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.05);
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        /* --- Experience Section --- */
         .timeline {
-          padding-left: 2rem;
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary), transparent);
         }
 
         .timeline-item {
-          padding-left: 1.5rem;
+            margin-bottom: 50px;
+            padding-left: 30px; /* Reduced for better mobile fit */
+            position: relative;
         }
 
-        .timeline-item::before {
-          left: -2.6rem;
+        .timeline-dot {
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            background: var(--bg-dark);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
         }
-      }
+
+        .exp-card {
+            background: var(--bg-card);
+            border: var(--glass-border);
+            padding: 25px;
+            border-radius: 16px;
+            transition: 0.3s;
+        }
+
+        .exp-card:hover {
+            border-color: rgba(112, 0, 255, 0.4);
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 15px;
+        }
+
+        .exp-role {
+            font-size: 1.25rem;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .exp-company {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .exp-date {
+            font-family: 'Space Grotesk', monospace;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            background: rgba(255,255,255,0.05);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .exp-achievements li {
+            list-style: none;
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .exp-achievements li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .metric {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* --- Awards & Contact --- */
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .award-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: var(--glass-border);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
+            min-width: 160px;
+        }
+
+        .contact-btn:hover {
+            background: var(--primary);
+            color: #000;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.3);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #000;
+        }
+
+        footer {
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 60px;
+        }
+
+        /* --- Media Queries for Responsiveness --- */
+        @media (max-width: 768px) {
+            nav {
+                width: 95%;
+                bottom: 20px;
+                top: auto; /* Move nav to bottom on mobile for easier thumb reach */
+                padding: 10px;
+            }
+
+            nav ul {
+                justify-content: space-around;
+            }
+
+            nav a {
+                font-size: 0.75rem;
+                padding: 8px;
+            }
+
+            .hero {
+                padding-top: 60px;
+                padding-bottom: 120px; /* Space for bottom nav */
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr; /* 2 columns on tablets/mobile */
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr; /* Stack about section */
+            }
+
+            .exp-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr; /* Stack stats on very small screens */
+            }
+            
+            .hero-badges {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .badge {
+                width: 100%;
+                text-align: center;
+                max-width: 250px;
+            }
+
+            nav a span {
+                /* Optional: Hide text in nav on very small screens if using icons */
+            }
+            
+            .timeline-item {
+                padding-left: 20px;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body { background: white; color: black; }
+            .bg-grid, .bg-glow, nav, .contact-btn { display: none; }
+            .hero { min-height: auto; padding: 20px 0; }
+            .hero h1 { -webkit-text-fill-color: black; background: none; }
+            .stat-card, .skill-card, .exp-card, .highlight-item, .award-card, .certifications { 
+                border: 1px solid #ddd; 
+                background: none; 
+                page-break-inside: avoid;
+                color: black;
+                box-shadow: none;
+            }
+            .stat-number { -webkit-text-fill-color: black; }
+            a { text-decoration: none; color: black; }
+            .timeline::before { background: #ddd; }
+            .timeline-dot { border-color: #333; }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
     <nav>
-      <ul>
-        <li>
-          <a href="#home">Home</a>
-        </li>
-        <li>
-          <a href="#about">About</a>
-        </li>
-        <li>
-          <a href="#skills">Skills</a>
-        </li>
-        <li>
-          <a href="#experience">Experience</a>
-        </li>
-        <li>
-          <a href="#awards">Awards</a>
-        </li>
-        <li>
-          <a href="#contact">Contact</a>
-        </li>
-      </ul>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Work</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
     </nav>
+
     <section id="home" class="hero">
-      <div class="hero-content">
-        <h2>Data Engineer , Data Reliability Engineer</h2>
-        <h1>VIKRAM DHANWANI</h1>
-        <p class="hero-subtitle"> Building resilient data platforms and engineering excellence through modern cloud architecture, SRE practices, and platform engineering </p>
-        <div class="hero-badges">
-          <span class="badge">Azure Solutions Architect Expert</span>
-          <span class="badge">Azure Administrator Associate</span>
-          <span class="badge">5+ Years Experience</span>
+        <div class="reveal">
+            <h2>Data Engineer & SRE</h2>
+            <h1>VIKRAM DHANWANI</h1>
+            <p class="hero-subtitle">Architecting resilient 10TB+ scale data platforms on Azure. <br>Bridging the gap between Data Engineering and Reliability.</p>
+            
+            <div class="hero-badges">
+                <span class="badge">Azure Architect Expert</span>
+                <span class="badge">Azure Admin Associate</span>
+                <span class="badge">5+ Years Exp</span>
+            </div>
+
+            <div class="stats-grid" id="tilt-container">
+                <div class="stat-card" data-tilt>
+                    <span class="stat-number font-mono">10TB+</span>
+                    <span class="stat-label">Processed Monthly</span>
+                </div>
+                <div class="stat-card" data-tilt>
+                    <span class="stat-number font-mono">99.5%</span>
+                    <span class="stat-label">Platform Uptime</span>
+                </div>
+                <div class="stat-card" data-tilt>
+                    <span class="stat-number font-mono">$220K</span>
+                    <span class="stat-label">Annual Savings</span>
+                </div>
+                <div class="stat-card" data-tilt>
+                    <span class="stat-number font-mono">50+</span>
+                    <span class="stat-label">CI/CD Projects</span>
+                </div>
+            </div>
+            
+            <div style="margin-top: 50px;">
+                <a href="#contact" class="contact-btn btn-primary" style="display: inline-flex;">Let's Connect</a>
+            </div>
         </div>
-        <div class="hero-stats">
-          <div class="stat">
-            <span class="stat-number">10TB+</span>
-            <span class="stat-label">Data Processed Monthly</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number">99.5%</span>
-            <span class="stat-label">Platform Uptime</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number">$220K+</span>
-            <span class="stat-label">Annual Savings</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number">50+</span>
-            <span class="stat-label">CI/CD Projects Delivered</span>
-          </div>
-        </div>
-        <div class="cta-buttons">
-          <a href="#contact" class="btn btn-primary">Let's Connect</a>
-          <a href="#experience" class="btn btn-secondary">View My Work</a>
-        </div>
-      </div>
-      <div class="scroll-indicator">
-        <span></span>
-      </div>
     </section>
+
     <section id="about">
-      <h2 class="section-title">About Me</h2>
-      <p class="section-subtitle">Bridging Data Engineering and Data Reliability Engineering</p>
-      <div class="about-content">
-        <div class="about-text">
-          <p> I'm a Data Engineer and Data Reliability Engineer with 5 years of experience architecting enterprise-scale cloud data platforms on Azure. My unique blend of data engineering expertise and SRE practices enables me to build not just functional, but highly reliable and cost-optimized data solutions. </p>
-          <p> I specialize in designing resilient ETL/ELT pipelines using Azure Data Factory, Databricks, and Delta Lake while implementing comprehensive observability, incident response, and disaster recovery strategies. My approach combines modern data engineering patterns with SRE principles to deliver platforms that meet strict SLOs and uptime requirements. </p>
-          <p> From migrating legacy systems to modern lakehouse architectures to implementing passwordless authentication frameworks, I focus on building infrastructure that scales reliably while optimizing costs and improving developer experience. </p>
-          <div class="certifications">
-            <h3>Microsoft Certifications</h3>
-            <div class="cert-list">
-              <div class="cert-item">Azure Solutions Architect Expert</div>
-              <div class="cert-item">Azure Administrator Associate</div>
+        <div class="section-header reveal">
+            <h2 class="section-title">About Me</h2>
+        </div>
+        <div class="about-grid reveal">
+            <div class="about-text">
+                <p>I'm a Data Engineer and SRE with 5 years of experience architecting enterprise-scale cloud data platforms. My unique blend of data engineering expertise and SRE practices enables me to build not just functional, but highly reliable and cost-optimized data solutions.</p>
+                <p>I specialize in designing resilient ETL/ELT pipelines using Azure Data Factory, Databricks, and Delta Lake while implementing comprehensive observability, incident response, and disaster recovery strategies.</p>
+                <div class="certifications">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">🏆 Microsoft Certified</h3>
+                    <ul style="list-style: none; color: #fff;">
+                        <li>✓ Azure Solutions Architect Expert</li>
+                        <li>✓ Azure Administrator Associate</li>
+                    </ul>
+                </div>
             </div>
-          </div>
+            <div class="highlight-grid">
+                <div class="highlight-item">
+                    <h3>☁️ Data Engineering</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Architected scalable data platforms on Azure using Databricks, ADF, and Synapse for global operations.</p>
+                </div>
+                <div class="highlight-item">
+                    <h3>🎯 SRE Excellence</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Designed SLI/SLO frameworks achieving 99% uptime with Dynatrace & Azure Monitor.</p>
+                </div>
+                <div class="highlight-item">
+                    <h3>💰 Cost Optimization</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Delivered $220K+ in annual savings through strategic cloud migrations and rightsizing.</p>
+                </div>
+                <div class="highlight-item">
+                    <h3>🚀 Innovation</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Pioneered passwordless authentication frameworks and Power BI cost analytics.</p>
+                </div>
+            </div>
         </div>
-        <div class="about-highlights">
-          <div class="highlight-card">
-            <h3>☁️ Data Engineering</h3>
-            <p>Architected scalable data platforms on Azure using Databricks, ADF, and Synapse, enabling high-performance ETL pipelines and near real-time analytics for global business operations.</p>
-          </div>
-          <div class="highlight-card">
-            <h3>🎯 SRE Excellence</h3>
-            <p>Designed SLI/SLO frameworks achieving 99% uptime through comprehensive monitoring with Dynatrace, Azure Monitor, and automated incident response systems</p>
-          </div>
-          <div class="highlight-card">
-            <h3>☁️ Platform Engineering</h3>
-            <p>Built developer-friendly data platforms with CI/CD automation, reducing deployment time by 90% and eliminating manual errors across 50+ projects</p>
-          </div>
-          <div class="highlight-card">
-            <h3>💰 Cost Optimization</h3>
-            <p>Delivered $220K+ in annual savings through strategic cloud migrations, infrastructure rightsizing, and efficient resource utilization</p>
-          </div>
-          <div class="highlight-card">
-            <h3>🚀 Innovation</h3>
-            <p>Created first-of-its-kind solutions recognized by Microsoft SMEs, including Power BI cost utilization analytics and passwordless authentication frameworks</p>
-          </div>
-        </div>
-      </div>
     </section>
+
     <section id="skills">
-      <h2 class="section-title">Technical Expertise</h2>
-      <p class="section-subtitle">Full-stack data platform engineering with reliability at the core</p>
-      <div class="skills-grid">
-        <div class="skill-card">
-          <div class="skill-icon">🏗️</div>
-          <h3>Data Engineering</h3>
-          <p>Azure Data Factory, Synapse Analytics, Databricks, Delta Lake, Apache Spark (PySpark), Data Modeling, ETL/ELT Pipelines, Lakehouse Architecture, Data Governance</p>
+        <div class="section-header reveal">
+            <h2 class="section-title">Technical Arsenal</h2>
+            <p style="color: var(--text-muted);">Full-stack data platform engineering with reliability at the core</p>
         </div>
-        <div class="skill-card">
-          <div class="skill-icon">🛡️</div>
-          <h3>SRE & DevOps</h3>
-          <p>SLI/SLO Design, CI/CD Pipelines (YAML), Disaster Recovery, Incident Response, Azure DevOps, Infrastructure as Code (IaC), Reliability Engineering, Cost Optimization</p>
+        
+        <div class="skills-container reveal">
+            <div class="skill-card" data-tilt>
+                <div class="skill-icon">🏗️</div>
+                <h3>Data Engineering</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Azure Data Factory</span>
+                    <span class="skill-tag">Synapse</span>
+                    <span class="skill-tag">Databricks</span>
+                    <span class="skill-tag">Delta Lake</span>
+                    <span class="skill-tag">PySpark</span>
+                    <span class="skill-tag">Data Modeling</span>
+                </div>
+            </div>
+
+            <div class="skill-card" data-tilt>
+                <div class="skill-icon">🛡️</div>
+                <h3>SRE & DevOps</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">SLI/SLO Design</span>
+                    <span class="skill-tag">CI/CD (YAML)</span>
+                    <span class="skill-tag">Disaster Recovery</span>
+                    <span class="skill-tag">IaC</span>
+                    <span class="skill-tag">Azure DevOps</span>
+                </div>
+            </div>
+
+            <div class="skill-card" data-tilt>
+                <div class="skill-icon">📊</div>
+                <h3>Observability</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Dynatrace</span>
+                    <span class="skill-tag">Azure Monitor</span>
+                    <span class="skill-tag">Log Analytics</span>
+                    <span class="skill-tag">Power BI Premium</span>
+                    <span class="skill-tag">DAX</span>
+                </div>
+            </div>
+
+            <div class="skill-card" data-tilt>
+                <div class="skill-icon">💻</div>
+                <h3>Automation</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">PowerShell</span>
+                    <span class="skill-tag">Azure Functions</span>
+                    <span class="skill-tag">Logic Apps</span>
+                </div>
+            </div>
         </div>
-        <div class="skill-card">
-          <div class="skill-icon">📊</div>
-          <h3>Observability & Monitoring</h3>
-          <p>Dynatrace, Azure Monitor, Log Analytics, REST APIs, Power BI (Premium, DAX, RLS), Custom Dashboards, Alert Management, Performance Optimization</p>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">☁️</div>
-          <h3>Cloud & Storage</h3>
-          <p>Azure Data Lake Gen2, Blob Storage, Azure SQL, MySQL, Cosmos DB (NoSQL), Azure Analysis Services, IAM & Security Compliance</p>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">💻</div>
-          <h3>Programming & Automation</h3>
-          <p>Python, SQL, PowerShell, C++, Scala, Flask, Scikit-Learn, Azure Functions, Logic Apps, Power Automate</p>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">🔧</div>
-          <h3>Platform Engineering</h3>
-          <p>CI/CD Automation, YAML Pipelines, Infrastructure as Code, Developer Experience, API Development, React, Angular, .NET Core</p>
-        </div>
-      </div>
     </section>
+
     <section id="experience">
-      <h2 class="section-title">Professional Experience</h2>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="experience-card">
-            <div class="experience-header">
-              <h3>bp</h3>
-              <span class="role">Data Engineer</span>
-              <span class="dates">Sep 2025 – Present | Pune, India</span>
-            </div>
-            <div class="experience-description"> Implementing Databricks-based ingestion and transformation pipelines delivering curated datasets for BI and operational reporting across global operations. </div>
-            <ul class="achievements">
-              <li>Architecting scalable ELT frameworks on Azure medallion architecture with Databricks, Delta Lake, ADLS Gen2, and Synapse Serverless to support near real-time consumption and star-schema models for analytics at scale.</li>
-              <li>Standardizing reusable ingestion templates with parameterized notebooks, schema evolution handling, and idempotent upserts using Delta MERGE. </li>
-            </ul>
-          </div>
+        <div class="section-header reveal">
+            <h2 class="section-title">Career Trajectory</h2>
         </div>
-        <div class="timeline-item">
-          <div class="experience-card">
-            <div class="experience-header">
-              <h3>SLB (Schlumberger)</h3>
-              <span class="role">Data Engineer II</span>
-              <span class="dates">Nov 2023 – Sep 2025 | Pune, India</span>
+
+        <div class="timeline">
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Data Engineer</div>
+                            <div class="exp-company">BP</div>
+                        </div>
+                        <div class="exp-date">Sep 2025 – Present</div>
+                    </div>
+                    <ul class="exp-achievements">
+                        <li>Architecting scalable ELT frameworks on Azure medallion architecture with Databricks, Delta Lake, ADLS Gen2, and Synapse.</li>
+                        <li>Standardizing reusable ingestion templates with parameterized notebooks and idempotent upserts, improving delivery efficiency by <span class="metric">40%</span>.</li>
+                    </ul>
+                </div>
             </div>
-            <div class="experience-description"> Architected data engineering solutions for an enterprise analytics platform serving 500+ users, driving cost optimization and operational efficiency. </div>
-            <ul class="achievements">
-              <li>Re-engineered 90+ legacy Power BI dataflows into ADF pipelines with Delta Lake, processing <span class="metric">10TB+</span> monthly, enabling incremental refresh for 200+ assets, and reducing ETL latency by <span class="metric">30%</span>. </li>
-              <li>Architected migration from SAP OData to REST API-based ingestion with resilient pagination, retry, and dead-letter handling, delivering near real-time freshness and reducing extraction failures by <span class="metric">85%</span>. </li>
-              <li>Built capacity utilization analytics across 10 Premium workspaces using REST APIs, Log Analytics, and star-schema semantic models, enabling <span class="metric">$12K/month</span> in rightsizing savings. </li>
-              <li>Implemented passwordless authentication using Azure Managed Identity across Synapse and semantic models, eliminating rotation overhead and improving compliance across 200+ data assets.</li>
-              <li>Delivered lakehouse utilization analytics: ingested activity logs via REST + PowerShell, converted to Parquet with temporal partitioning, achieving <span class="metric">80%</span> storage reduction and daily executive insights. </li>
-              <li>Improved semantic model refresh reliability by <span class="metric">95%</span> (from 8 daily failures to 2 weekly) through OAuth2 token regeneration patterns and automated ServiceNow incident creation via Logic Apps. </li>
-              <li>Established SLOs for key pipelines and automated incident creation on threshold breaches, aligning availability targets and reducing MTTR from 2 days to 8 hours.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="experience-card">
-            <div class="experience-header">
-              <h3>SLB (Schlumberger)</h3>
-              <span class="role">Data Engineer</span>
-              <span class="dates">Mar 2022 – Nov 2023 | Pune, India</span>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Data Engineer II</div>
+                            <div class="exp-company">SLB (Schlumberger)</div>
+                        </div>
+                        <div class="exp-date">Nov 2023 – Sep 2025</div>
+                    </div>
+                    <ul class="exp-achievements">
+                        <li>Re-engineered 90+ legacy Power BI dataflows into ADF + Delta Lake, processing <span class="metric">10TB+</span> monthly, reducing latency by <span class="metric">30%</span>.</li>
+                        <li>Built capacity utilization analytics enabling <span class="metric">$12K/month</span> in rightsizing savings across 10 Premium workspaces.</li>
+                        <li>Implemented passwordless authentication using Azure Managed Identity across 200+ data assets.</li>
+                        <li>Improved semantic model refresh reliability by <span class="metric">95%</span> through automated Logic App incident creation.</li>
+                        <li>Established SLOs and automated incident alerts, reducing MTTR from 2 days to 8 hours.</li>
+                    </ul>
+                </div>
             </div>
-            <div class="experience-description"> Delivered scalable cloud migrations and data platform optimizations to improve cost efficiency and data performance. </div>
-            <ul class="achievements">
-              <li>Migrated ETL workloads from dedicated SQL Pool to Synapse Serverless for semantic model logging, improving performance by <span class="metric">25%</span> and reducing data volume scanned by <span class="metric">35%</span>. </li>
-              <li>Decommissioned 5 Azure Analysis Services instances by migrating 11 tabular models (500M+ rows) to Power BI Large Datasets, eliminating <span class="metric">$20K/month</span> and maintaining sub-second queries. </li>
-              <li>Optimized warehouse queries from 60 minutes to 2 minutes by switching to hash distribution, adding clustered columnstore indexes, and automating statistics maintenance in the ETL.</li>
-              <li>Developed custom monitoring for 10 Premium capacities and 8 gateways using Azure Functions and Power BI REST APIs, reducing incident detection time by <span class="metric">40%</span>. </li>
-              <li>Automated 20+ operational workflows with Functions, Logic Apps, and Power Automate, saving 10 hours per week in refresh, validation, and reporting tasks.</li>
-              <li>Rolled out enterprise sensitivity labels and mandatory policies for Power BI, standardizing data classification and access controls.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="experience-card">
-            <div class="experience-header">
-              <h3>SLB (Schlumberger)</h3>
-              <span class="role">Associate Data Engineer</span>
-              <span class="dates">Oct 2020 – Feb 2022 | Pune, India</span>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Data Engineer</div>
+                            <div class="exp-company">SLB (Schlumberger)</div>
+                        </div>
+                        <div class="exp-date">Mar 2022 – Nov 2023</div>
+                    </div>
+                    <ul class="exp-achievements">
+                        <li>Migrated workloads to Synapse Serverless, improving performance by <span class="metric">25%</span>.</li>
+                        <li>Decommissioned 5 Azure Analysis Services instances, saving <span class="metric">$20K/month</span>.</li>
+                        <li>Optimized warehouse queries from 60 mins to 2 mins via hash distribution and indexing strategies.</li>
+                        <li>Developed custom monitoring for Premium capacities reducing incident detection time by <span class="metric">40%</span>.</li>
+                    </ul>
+                </div>
             </div>
-            <div class="experience-description"> Established DevOps practices and automated deployment pipelines for data infrastructure driving cost and delivery efficiency. </div>
-            <ul class="achievements">
-              <li>Migrated Power BI workloads to Enterprise Shared Capacities, saving <span class="metric">$200K/year</span> and improving reliability by <span class="metric">25%</span> through proactive capacity planning. </li>
-              <li>Implemented end-to-end CI/CD in Azure DevOps for 50+ ADF, Synapse, AAS, and Power BI projects, reducing deployment time from 2–3 days to 2–4 hours with automated validation gates.</li>
-              <li>Developed centralized infrastructure monitoring using PowerShell, ADF, and Power Platform (Automate, Apps), reducing manual troubleshooting by <span class="metric">15%</span> and creating a single-pane-of-glass for ops. </li>
-              <li>Defined SLIs/SLOs for critical refresh and gateway operations and introduced automated alerting with dynamic thresholds in Azure Monitor and Log Analytics.</li>
-              <li>Hardened IAM and RBAC with least-privilege roles, service principals, and managed identities across data plane and control plane for compliant operations.</li>
-            </ul>
-          </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Associate Data Engineer</div>
+                            <div class="exp-company">SLB (Schlumberger)</div>
+                        </div>
+                        <div class="exp-date">Oct 2020 – Feb 2022</div>
+                    </div>
+                    <ul class="exp-achievements">
+                        <li>Implemented end-to-end CI/CD in Azure DevOps for 50+ projects, reducing deployment time from days to hours.</li>
+                        <li>Migrated Power BI workloads to Shared Capacities, saving <span class="metric">$200K/year</span>.</li>
+                        <li>Hardened IAM and RBAC with least-privilege roles across the data plane.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
+
     <section id="awards">
-      <h2 class="section-title">Awards</h2>
-      <div class="awards-grid">
-        <div class="award-card">
-          <div class="award-icon">🏆</div>
-          <h3>SLB Reward of Excellence</h3>
-          <p>Q3 2024 - Recognized for delivering enterprise cost utilization analytics enabling executive-led rightsizing and savings.</p>
+        <div class="section-header reveal">
+            <h2 class="section-title">Awards & Education</h2>
         </div>
-        <div class="award-card">
-          <div class="award-icon">🏆</div>
-          <h3>SLB Reward of Excellence</h3>
-          <p>Q2 2023 - Awarded for re-engineering 90+ dataflows to ADF + Delta Lake at 10TB+ monthly scale with 30% latency reduction.</p>
+        <div class="awards-grid reveal">
+            <div class="award-card">
+                <div style="font-size: 2rem; margin-bottom: 10px;">🏆</div>
+                <h3>SLB Reward of Excellence</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Q3 2024 & Q2 2023</p>
+                <p style="font-size: 0.9rem; margin-top: 10px;">For delivering enterprise cost analytics and re-engineering 10TB+ scale pipelines.</p>
+            </div>
+            <div class="award-card">
+                <div style="font-size: 2rem; margin-bottom: 10px;">🌟</div>
+                <h3>Best Team Player</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">H1 2022</p>
+                <p style="font-size: 0.9rem; margin-top: 10px;">Honored for cross-functional delivery across data, SRE, and BI teams.</p>
+            </div>
+            <div class="award-card">
+                <div style="font-size: 2rem; margin-bottom: 10px;">🎓</div>
+                <h3>B.Tech, Info Tech</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">COEP (2016-2020)</p>
+                <p style="font-size: 0.9rem; margin-top: 10px;">CGPA: 8.46 | Capstone: NLP Police Complaint Classifier (99.2% Accuracy).</p>
+            </div>
         </div>
-        <div class="award-card">
-          <div class="award-icon">🌟</div>
-          <h3>Best Team Player</h3>
-          <p>H1 2022 - Honored for cross-functional delivery across data, SRE, and BI to stabilize critical analytics workloads.</p>
-        </div>
-        <div class="award-card">
-          <div class="award-icon">🏅</div>
-          <h3>SLB Reward of Excellence</h3>
-          <p>2021 - Recognized for CI/CD rollout across 50+ projects and centralized monitoring that reduced manual effort by 15%.</p>
-        </div>
-        <div class="award-card">
-          <div class="award-icon">🎓</div>
-          <h3>B.Tech, Information Technology</h3>
-          <p>College of Engineering, Pune (COEP) - Aug 2016 – Aug 2020 - CGPA: 8.46</p>
-          <p>Capstone: NLP-based Police Complaint Classifier; 99.2% accuracy using feature engineering and ensemble methods.</p>
-        </div>
-      </div>
     </section>
+
     <section id="contact">
-      <div class="contact-intro"> Open to Data Engineering and SRE roles. Let's connect for opportunities in Azure, Databricks, Lakehouse, and reliability engineering. </div>
-      <div class="contact-grid">
-        <div class="contact-card">
-          <div class="contact-icon">✉️</div>
-          <h3>Email</h3>
-          <p>
-            <a href="mailto:vickydhanwani11@gmail.com">vickydhanwani11@gmail.com</a>
-          </p>
+        <div class="reveal" style="text-align: center;">
+            <h2 class="section-title">Let's Build Something Resilient</h2>
+            <p style="color: var(--text-muted); margin-bottom: 40px;">Open to opportunities in Azure, Databricks, Lakehouse, and Reliability Engineering.</p>
+            
+            <div class="contact-links">
+                <a href="mailto:vickydhanwani11@gmail.com" class="contact-btn">
+                    <span>✉️</span> Email Me
+                </a>
+                <a href="https://linkedin.com/in/vikram-dhanwani" target="_blank" class="contact-btn">
+                    <span>🔗</span> LinkedIn
+                </a>
+                <a href="https://github.com/VickyDhanwani" target="_blank" class="contact-btn">
+                    <span>💻</span> GitHub
+                </a>
+                <a href="tel:+917350632588" class="contact-btn">
+                    <span>📱</span> +91-7350632588
+                </a>
+            </div>
         </div>
-        <div class="contact-card">
-          <div class="contact-icon">📱</div>
-          <h3>Phone</h3>
-          <p>
-            <a href="tel:+917350632588">+91-7350632588</a>
-          </p>
-        </div>
-        <div class="contact-card">
-          <div class="contact-icon">📍</div>
-          <h3>Location</h3>
-          <p>Pune, India</p>
-        </div>
-        <div class="contact-card">
-          <div class="contact-icon">🔗</div>
-          <h3>LinkedIn</h3>
-          <p>
-            <a href="https://linkedin.com/in/vikram-dhanwani" target="_blank" rel="noopener">linkedin.com/in/vikram-dhanwani</a>
-          </p>
-        </div>
-        <div class="contact-card">
-          <div class="contact-icon">💻</div>
-          <h3>GitHub</h3>
-          <p>
-            <a href="https://github.com/vikram-dhanwani" target="_blank" rel="noopener">github.com/vikram-dhanwani</a>
-          </p>
-        </div>
-        <div class="contact-card">
-          <div class="contact-icon">🎓</div>
-          <h3>Certifications</h3>
-          <p> Azure Solutions Architect Expert <br> Azure Administrator Associate </p>
-        </div>
-      </div>
     </section>
+
     <footer>
-      <p>© 2025 Vikram Dhanwani - Pune, India</p>
-      <div class="footer-links">
-        <a href="mailto:vickydhanwani11@gmail.com">Email</a>
-        <a href="https://linkedin.com/in/vikram-dhanwani" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://github.com/vikram-dhanwani" target="_blank" rel="noopener">GitHub</a>
-        <a href="#experience">Experience</a>
-      </div>
+        <p>© 2025 Vikram Dhanwani. Built with resilience in Pune, India.</p>
     </footer>
+
+    <script>
+        // 1. Scroll Reveal Logic
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+
+            revealElements.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add("active");
+                }
+            });
+        };
+
+        window.addEventListener("scroll", revealOnScroll);
+        // Trigger once on load
+        revealOnScroll();
+
+        // 2. Vanilla 3D Tilt Effect
+        // Disabled on touch devices for smoother scrolling
+        if (window.matchMedia("(hover: hover)").matches) {
+            const tiltElements = document.querySelectorAll('[data-tilt]');
+
+            tiltElements.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = ((y - centerY) / centerY) * -10; // Max rotation deg
+                    const rotateY = ((x - centerX) / centerX) * 10;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                });
+            });
+        }
+
+        // 3. Navigation Active State
+        const sections = document.querySelectorAll('section');
+        const navLi = document.querySelectorAll('nav ul li a');
+
+        window.onscroll = () => {
+            revealOnScroll(); // Keep reveal logic running
+            
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 300) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLi.forEach((a) => {
+                a.classList.remove("active");
+                if (a.getAttribute("href").includes(current)) {
+                    a.classList.add("active");
+                }
+            });
+        };
+    </script>
 </body>
 </html>
