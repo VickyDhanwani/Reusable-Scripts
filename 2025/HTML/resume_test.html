@@ -3,531 +3,946 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vikram Dhanwani - Data Engineer</title>
+    <title>Vikram Dhanwani | Cloud Data Architect</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Space+Grotesk:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            --bg-dark: #050a14;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.07);
+            --primary: #00f2ff; /* Cyan for Data */
+            --secondary: #7000ff; /* Purple for Cloud */
+            --accent: #ff0055; /* Pink for Alerts/SRE */
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --nav-bg: rgba(5, 10, 20, 0.85);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
-        
+
         body {
-            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll */
             line-height: 1.6;
-            color: #2c3e50;
-            background: #ffffff;
+            width: 100%;
         }
-        
-        .container {
-            max-width: 850px;
-            margin: 0 auto;
-            background: white;
+
+        /* --- Dynamic Background --- */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 90%);
+            pointer-events: none;
         }
-        
-        .header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 15px 50px 15px;
-            position: relative;
+
+        .bg-glow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 80vw;
+            max-width: 600px;
+            max-height: 600px;
+            background: radial-gradient(circle, rgba(112, 0, 255, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: -1;
+            animation: pulseGlow 8s ease-in-out infinite alternate;
+            pointer-events: none;
         }
-        
-        .name {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            margin-bottom: 5px;
+
+        @keyframes pulseGlow {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.8; }
         }
-        
-        .title {
-            font-size: 14px;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-            opacity: 0.95;
-            margin-bottom: 12px;
+
+        /* --- Typography --- */
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
         }
-        
-        .contact-bar {
+
+        .font-mono {
+            font-family: 'Space Grotesk', monospace;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: var(--nav-bg);
+            backdrop-filter: blur(16px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        nav ul {
             display: flex;
-            flex-wrap: wrap;
-            gap: 18px;
-            font-size: 11px;
-            opacity: 0.95;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .contact-item::before {
-            content: '|';
-            font-size: 12px;
-            margin-right: 5px;
-            opacity: 0.6;
-        }
-        
-        .contact-item:first-child::before {
-            content: '';
+            justify-content: space-between;
+            list-style: none;
+            padding: 0;
             margin: 0;
+            width: 100%;
         }
-        
-        .contact-item a {
-            color: white;
+
+        nav a {
+            color: var(--text-muted);
             text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            white-space: nowrap;
         }
-        
-        .main-content {
-            padding: 30px 50px 40px;
+
+        nav a:hover, nav a.active {
+            color: var(--bg-dark);
+            background: var(--primary);
         }
-        
-        .section {
-            margin-bottom: 18px;
-        }
-        
-        .section-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1e3c72;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-bottom: 16px;
-            padding-bottom: 6px;
-            border-bottom: 2px solid #e8f0fe;
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 60px; /* Top padding accounts for nav */
             position: relative;
+            width: 100%;
         }
-        
-        .section-title::before {
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+            width: 100%;
+        }
+
+        .hero h2 {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .hero-subtitle {
+            max-width: 600px;
+            color: var(--text-muted);
+            font-size: clamp(1rem, 1.2vw, 1.2rem);
+            margin: 0 auto 40px;
+            padding: 0 10px;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .badge {
+            background: rgba(0, 242, 255, 0.05);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* --- 3D Stats Cards --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+            perspective: 1000px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: var(--glass-border);
+            padding: 25px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.1s;
+            transform-style: preserve-3d;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin-bottom: 5px;
+            transform: translateZ(20px);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transform: translateZ(10px);
+            display: block;
+        }
+
+        /* --- General Section Styles --- */
+        section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
             content: '';
             position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 50px;
-            height: 2px;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
         }
-        
-        .summary-text {
-            font-size: 11.5px;
-            line-height: 1.7;
-            color: #34495e;
-            text-align: justify;
+
+        /* --- Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
-        
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- About Section --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            align-items: start;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
         .certifications {
-            margin-top: 8px;
-            padding: 8px 10px;
-            background: #f8f9fa;
-            border-left: 3px solid #2a5298;
-            font-size: 8.5px;
-            font-weight: 600;
-            color: #1e3c72;
+            margin-top: 30px;
+            border: 1px solid var(--primary);
+            padding: 20px;
+            border-radius: 12px;
+            background: rgba(0,242,255,0.05);
         }
-        
+
+        .highlight-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .highlight-item {
+            background: linear-gradient(90deg, rgba(255,255,255,0.03), transparent);
+            padding: 20px;
+            border-left: 3px solid var(--primary);
+            border-radius: 0 10px 10px 0;
+            transition: 0.3s;
+        }
+
+        /* --- Skills Section --- */
         .skills-container {
             display: grid;
-            gap: 9px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
-        
-        .skill-row {
-            display: flex;
-            font-size: 11px;
-            line-height: 1.6;
+
+        .skill-card {
+            background: var(--bg-card);
+            border: var(--glass-border);
+            padding: 25px;
+            border-radius: 16px;
+            transition: 0.3s;
         }
-        
-        .skill-label {
-            font-weight: 700;
-            color: #1e3c72;
-            min-width: 170px;
-            flex-shrink: 0;
+
+        .skill-card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(0, 242, 255, 0.3);
+            transform: translateY(-5px);
         }
-        
-        .skill-items {
-            color: #34495e;
-        }
-        
-        .awards-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        
-        .award-item {
-            background: #f8f9fa;
-            padding: 10px 12px;
-            border-radius: 3px;
-            border-left: 3px solid #2a5298;
-        }
-        
-        .award-content {
-            flex: 1;
-        }
-        
-        .award-title {
-            font-size: 9px;
-            font-weight: 700;
-            color: #1e3c72;
-            margin-bottom: 3px;
-        }
-        
-        .award-year {
-            font-size: 9px;
-            color: #555;
-            font-style: italic;
-        }
-        
-        .experience-item {
+
+        .skill-icon {
+            font-size: 2.5rem;
             margin-bottom: 20px;
-            position: relative;
-            padding-left: 18px;
+            background: rgba(255,255,255,0.1);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
         }
-        
-        .experience-item::before {
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.05);
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        /* --- Experience Section --- */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
             content: '';
             position: absolute;
             left: 0;
-            top: 6px;
-            width: 7px;
-            height: 7px;
-            background: #2a5298;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary), transparent);
+        }
+
+        .timeline-item {
+            margin-bottom: 50px;
+            padding-left: 30px; /* Reduced for better mobile fit */
+            position: relative;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            background: var(--bg-dark);
+            border: 2px solid var(--primary);
             border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
         }
-        
-        .company-header {
+
+        .exp-card {
+            background: var(--bg-card);
+            border: var(--glass-border);
+            padding: 25px;
+            border-radius: 16px;
+            transition: 0.3s;
+        }
+
+        .exp-card:hover {
+            border-color: rgba(112, 0, 255, 0.4);
+        }
+
+        .exp-header {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 3px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 15px;
         }
-        
-        .company-name {
-            font-size: 13px;
+
+        .exp-role {
+            font-size: 1.25rem;
+            color: #fff;
             font-weight: 700;
-            color: #1e3c72;
         }
-        
-        .location {
-            font-size: 10.5px;
-            color: #7f8c8d;
-            font-style: italic;
-        }
-        
-        .role-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 7px;
-        }
-        
-        .role-title {
-            font-size: 11.5px;
-            font-weight: 600;
-            color: #2c3e50;
-            font-style: italic;
-        }
-        
-        .dates {
-            font-size: 10.5px;
-            color: #7f8c8d;
+
+        .exp-company {
+            color: var(--primary);
             font-weight: 500;
         }
-        
-        .role-description {
-            font-size: 10.5px;
-            color: #555;
-            margin-bottom: 7px;
-            font-style: italic;
-            line-height: 1.5;
+
+        .exp-date {
+            font-family: 'Space Grotesk', monospace;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            background: rgba(255,255,255,0.05);
+            padding: 4px 10px;
+            border-radius: 4px;
         }
-        
-        .achievements {
+
+        .exp-achievements li {
             list-style: none;
-            margin-left: 0;
-        }
-        
-        .achievements li {
-            font-size: 11px;
-            line-height: 1.6;
-            color: #34495e;
-            margin-bottom: 5px;
-            padding-left: 16px;
             position: relative;
-            text-align: justify;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
-        
-        .achievements li::before {
-            content: '▸';
+
+        .exp-achievements li::before {
+            content: '▹';
             position: absolute;
             left: 0;
-            color: #2a5298;
+            color: var(--secondary);
             font-weight: bold;
         }
-        
-        .education-box {
-            background: #f8f9fa;
-            padding: 14px 18px;
-            border-radius: 4px;
-            border-left: 3px solid #2a5298;
-        }
-        
-        .education-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 5px;
-        }
-        
-        .degree {
-            font-size: 11.5px;
+
+        .metric {
+            color: var(--primary);
             font-weight: 700;
-            color: #1e3c72;
         }
-        
-        .edu-dates {
-            font-size: 10.5px;
-            color: #7f8c8d;
-        }
-        
-        .institution {
-            font-size: 10.5px;
-            color: #555;
-            margin-bottom: 7px;
-        }
-        
-        .project-text {
-            font-size: 10.5px;
-            color: #34495e;
-            line-height: 1.6;
-        }
-        
-        .additional-grid {
+
+        /* --- Awards & Contact --- */
+        .awards-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            font-size: 10.5px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
         }
-        
-        .additional-item {
+
+        .award-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: var(--glass-border);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .contact-links {
             display: flex;
-            gap: 8px;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 40px;
         }
-        
-        .additional-label {
-            font-weight: 700;
-            color: #1e3c72;
-            min-width: 75px;
-        }
-        
-        .additional-value {
-            color: #34495e;
-        }
-        
-        .metrics-highlight {
-            background: #fff3cd;
-            padding: 2px 5px;
-            border-radius: 3px;
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
             font-weight: 600;
+            transition: 0.3s;
+            min-width: 160px;
+        }
+
+        .contact-btn:hover {
+            background: var(--primary);
+            color: #000;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.3);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #000;
+        }
+
+        footer {
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 60px;
+        }
+
+        /* --- Media Queries for Responsiveness --- */
+        @media (max-width: 768px) {
+            nav {
+                width: 95%;
+                bottom: 20px;
+                top: auto; /* Move nav to bottom on mobile for easier thumb reach */
+                padding: 10px;
+            }
+
+            nav ul {
+                justify-content: space-around;
+            }
+
+            nav a {
+                font-size: 0.75rem;
+                padding: 8px;
+            }
+
+            .hero {
+                padding-top: 60px;
+                padding-bottom: 120px; /* Space for bottom nav */
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr; /* 2 columns on tablets/mobile */
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr; /* Stack about section */
+            }
+
+            .exp-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr; /* Stack stats on very small screens */
+            }
+            
+            .hero-badges {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .badge {
+                width: 100%;
+                text-align: center;
+                max-width: 250px;
+            }
+
+            nav a span {
+                /* Optional: Hide text in nav on very small screens if using icons */
+            }
+            
+            .timeline-item {
+                padding-left: 20px;
+            }
         }
         
+        /* Print Styles */
         @media print {
-            body {
-                background: white;
+            body { background: white; color: black; }
+            .bg-grid, .bg-glow, nav, .contact-btn { display: none; }
+            .hero { min-height: auto; padding: 20px 0; }
+            .hero h1 { -webkit-text-fill-color: black; background: none; }
+            .stat-card, .skill-card, .exp-card, .highlight-item, .award-card, .certifications { 
+                border: 1px solid #ddd; 
+                background: none; 
+                page-break-inside: avoid;
+                color: black;
+                box-shadow: none;
             }
-            .container {
-                max-width: 100%;
-            }
-            .header {
-                padding: 20px 40px 15px;
-            }
-            .main-content {
-                padding: 25px 40px 30px;
-            }
-        }
-        
-        @page {
-            margin: 0.5in;
-            size: letter;
+            .stat-number { -webkit-text-fill-color: black; }
+            a { text-decoration: none; color: black; }
+            .timeline::before { background: #ddd; }
+            .timeline-dot { border-color: #333; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="name">VIKRAM DHANWANI</div>
-            <div class="title">Data Engineer</div>
-            <div class="contact-bar">
-                <div class="contact-item">Pune, India</div>
-                <div class="contact-item">vickydhanwani11@gmail.com</div>
-                <div class="contact-item">+91-7350632588</div>
-                <div class="contact-item"><a href="https://linkedin.com/in/vikram-dhanwani">linkedin.com/in/vikram-dhanwani</a></div>
+
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Work</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="reveal">
+            <h2>Data Engineer & SRE</h2>
+            <h1>VIKRAM DHANWANI</h1>
+            <p class="hero-subtitle">Architecting resilient 10TB+ scale data platforms on Azure. <br>Bridging the gap between Data Engineering and Reliability.</p>
+            
+            <div class="hero-badges">
+                <span class="badge">Azure Architect Expert</span>
+                <span class="badge">Azure Admin Associate</span>
+                <span class="badge">5+ Years Exp</span>
+            </div>
+
+            <div class="stats-grid" id="tilt-container">
+                <div class="stat-card" data-tilt>
+                    <span class="stat-number font-mono">10TB+</span>
+                    <span class="stat-label">Processed Monthly</span>
+                </div>
+                <div class="stat-card" data-tilt>
+                    <span class="stat-number font-mono">99.5%</span>
+                    <span class="stat-label">Platform Uptime</span>
+                </div>
+                <div class="stat-card" data-tilt>
+                    <span class="stat-number font-mono">$220K</span>
+                    <span class="stat-label">Annual Savings</span>
+                </div>
+                <div class="stat-card" data-tilt>
+                    <span class="stat-number font-mono">50+</span>
+                    <span class="stat-label">CI/CD Projects</span>
+                </div>
+            </div>
+            
+            <div style="margin-top: 50px;">
+                <a href="#contact" class="contact-btn btn-primary" style="display: inline-flex;">Let's Connect</a>
             </div>
         </div>
+    </section>
 
-        <div class="main-content">
-            <div class="section">
-                <div class="section-title">Professional Summary</div>
-                <div class="summary-text">
-                    Data Engineer with 5 years of experience architecting and optimizing enterprise-scale cloud data platforms on Azure. Specialized in building high-performance ETL/ELT pipelines using Azure Data Factory, Databricks, and Delta Lake that process 10TB+ monthly while reducing costs and improving reliability. Proven track record of migrating legacy systems to modern lakehouse architectures, implementing CI/CD practices, and delivering data solutions that drive business intelligence for 500+ users. Expert in cost optimization, having delivered $200K+ in annual savings through strategic cloud migrations and infrastructure improvements.
-                </div>
+    <section id="about">
+        <div class="section-header reveal">
+            <h2 class="section-title">About Me</h2>
+        </div>
+        <div class="about-grid reveal">
+            <div class="about-text">
+                <p>I'm a Data Engineer and SRE with 5 years of experience architecting enterprise-scale cloud data platforms. My unique blend of data engineering expertise and SRE practices enables me to build not just functional, but highly reliable and cost-optimized data solutions.</p>
+                <p>I specialize in designing resilient ETL/ELT pipelines using Azure Data Factory, Databricks, and Delta Lake while implementing comprehensive observability, incident response, and disaster recovery strategies.</p>
                 <div class="certifications">
-                    Microsoft Certified: Azure Administrator Associate | Azure Solutions Architect Expert
-                </div>
-            </div>
-
-            <div class="section">
-                <div class="section-title">Technical Expertise</div>
-                <div class="skills-container">
-                    <div class="skill-row">
-                        <div class="skill-label">Data Engineering</div>
-                        <div class="skill-items">Azure Data Factory, Synapse Analytics, Databricks, Delta Lake, Apache Spark (PySpark), Data Modeling, ETL/ELT Pipelines, Lakehouse Architecture</div>
-                    </div>
-                    <div class="skill-row">
-                        <div class="skill-label">Cloud & Storage</div>
-                        <div class="skill-items">Azure Data Lake Gen2, Blob Storage, MySQL, Azure SQL Database, Cosmos DB (NoSQL), Azure Analysis Services</div>
-                    </div>
-                    <div class="skill-row">
-                        <div class="skill-label">Programming</div>
-                        <div class="skill-items">Python, SQL, PowerShell, Scala, DAX</div>
-                    </div>
-                    <div class="skill-row">
-                        <div class="skill-label">DevOps & Automation</div>
-                        <div class="skill-items">Azure DevOps, CI/CD Pipelines, YAML, Infrastructure as Code (IaC), Azure Functions, Logic Apps</div>
-                    </div>
-                    <div class="skill-row">
-                        <div class="skill-label">Analytics & BI</div>
-                        <div class="skill-items">Power BI (Premium, Large Datasets), REST APIs, Data Visualization, Semantic Modeling</div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="section">
-                <div class="section-title">Professional Experience</div>
-
-                <div class="experience-item">
-                    <div class="company-header">
-                        <div class="company-name">SLB (Schlumberger)</div>
-                        <div class="location">Pune, India</div>
-                    </div>
-                    <div class="role-header">
-                        <div class="role-title">Data Engineer II</div>
-                        <div class="dates">Nov 2023 - Sep 2025</div>
-                    </div>
-                    <div class="role-description">
-                        Architected and delivered data engineering solutions for enterprise analytics platform serving 500+ users across multiple business units, driving cost optimization and operational efficiency.
-                    </div>
-                    <ul class="achievements">
-                        <li>Architected migration from SAP OData to REST API-based ingestion system, achieving near-real-time data freshness (from daily batches) and reducing extraction failures by <span class="metrics-highlight">85%</span> through improved error handling and retry mechanisms</li>
-                        <li>Re-engineered 90+ legacy Power BI dataflows into Azure Data Factory pipelines with Delta Lake storage, processing <span class="metrics-highlight">10TB+ monthly</span> while reducing ETL latency by <span class="metrics-highlight">30%</span> and enabling incremental refresh patterns for 200+ data assets</li>
-                        <li>Built comprehensive monitoring and analytics solution for Power BI Premium capacity utilization across 10 production workspaces, providing real-time visibility into resource consumption patterns and enabling <span class="metrics-highlight">$12K/month</span> in infrastructure rightsizing decisions</li>
-                        <li>Implemented passwordless authentication framework using Azure Managed Identity for Synapse Analytics and semantic models, eliminating credential rotation overhead and improving security compliance across 200+ data assets</li>
-                        <li>Designed lakehouse utilization analytics platform implementing medallion architecture (bronze/silver/gold) that ingests Log Analytics logs and activity events via REST APIs with PowerShell-based paginated extraction, converts to Parquet with temporal partitioning (<span class="metrics-highlight">80% storage reduction</span>), and delivers daily executive insights through star schema semantic model</li>
-                        <li>Improved semantic model refresh reliability by <span class="metrics-highlight">95%</span> (8 failures/day to 2 failures/week) through OAuth2 token refresh automation to prevent expiration during long-running semantic model refreshes (3+ hours), ServiceNow integration via Logic Apps REST API for automated incident creation, reducing incident response time from 2 days to 6 hours</li>
-                    </ul>
-                </div>
-
-                <div class="experience-item">
-                    <div class="role-header">
-                        <div class="role-title">Data Engineer</div>
-                        <div class="dates">Mar 2022 - Nov 2023</div>
-                    </div>
-                    <div class="role-description">
-                        Led cloud infrastructure optimization initiatives and data platform migrations to improve cost efficiency and performance.
-                    </div>
-                    <ul class="achievements">
-                        <li>Redesigned Azure Analysis Services logging pipeline by migrating ETL logic from dedicated SQL pool to Synapse Analytics serverless compute, reducing SQL pool costs by <span class="metrics-highlight">25%</span> and query volume by <span class="metrics-highlight">35%</span> through optimized processing patterns</li>
-                        <li>Successfully decommissioned 5 Azure Analysis Services instances by migrating 11 tabular models (500M+ rows) to Power BI Premium Large Datasets, eliminating <span class="metrics-highlight">$20K monthly</span> infrastructure costs while maintaining sub-second query performance</li>
-                        <li>Optimized business-critical data warehouse queries from 60 minutes to 2 minutes <span class="metrics-highlight">(97% improvement)</span> by migrating distribution strategy from round-robin to hash distribution on high-cardinality keys, implementing clustered columnstore indexes, and automating statistics updates in ETL pipeline for sustained performance</li>
-                        <li>Developed custom monitoring solution using Azure Functions and Power BI REST APIs to track health metrics across 10 Premium capacities and 8 on-premises gateways, reducing incident detection time by <span class="metrics-highlight">40%</span> and enabling proactive capacity management</li>
-                        <li>Automated 20 operational workflows using Azure Functions, Logic Apps, and Power Automate, eliminating <span class="metrics-highlight">10 hours weekly</span> of manual data refresh, validation, and reporting tasks</li>
-                        <li>Deployed Microsoft Purview sensitivity labels across enterprise Power BI tenant with mandatory labeling policies for all published reports, standardizing data classification compliance across organization</li>
-                    </ul>
-                </div>
-
-                <div class="experience-item">
-                    <div class="role-header">
-                        <div class="role-title">Associate Data Engineer</div>
-                        <div class="dates">Oct 2020 - Feb 2022</div>
-                    </div>
-                    <div class="role-description">
-                        Established DevOps practices and automated deployment pipelines for data infrastructure, driving efficiency and cost optimization.
-                    </div>
-                    <ul class="achievements">
-                        <li>Spearheaded migration from per-user licensing to Enterprise Shared Capacity model for Power BI Premium, consolidating workloads and reducing annual licensing costs by <span class="metrics-highlight">$200K</span> through strategic capacity planning</li>
-                        <li>Implemented CI/CD pipelines in Azure DevOps for 50+ data projects (Azure Data Factory, Synapse Analytics, Power BI), reducing deployment time from 2-3 days to 2-4 hours and eliminating manual deployment errors through automated validation</li>
-                        <li>Developed centralized infrastructure monitoring dashboard using PowerShell, Azure Data Factory, and Power Platform, providing unified view of pipeline health and reducing troubleshooting time by <span class="metrics-highlight">15%</span></li>
-                    </ul>
-                </div>
-
-                <div class="experience-item">
-                    <div class="role-header">
-                        <div class="role-title">Software Development Intern</div>
-                        <div class="dates">May 2019 - Jul 2019</div>
-                    </div>
-                    <ul class="achievements">
-                        <li>Built real-time drilling operations dashboard using Angular and .NET Core, integrating with SQL Server to display live sensor data from field operations and reducing manual data retrieval time by <span class="metrics-highlight">70%</span></li>
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">🏆 Microsoft Certified</h3>
+                    <ul style="list-style: none; color: #fff;">
+                        <li>✓ Azure Solutions Architect Expert</li>
+                        <li>✓ Azure Administrator Associate</li>
                     </ul>
                 </div>
             </div>
-
-            <div class="section">
-                <div class="section-title">Education</div>
-                <div class="education-box">
-                    <div class="education-header">
-                        <div class="degree">Bachelor of Technology in Information Technology</div>
-                        <div class="edu-dates">Aug 2016 - Aug 2020 | CGPA: 8.46</div>
-                    </div>
-                    <div class="institution">College of Engineering, Pune (COEP)</div>
-                    <div class="project-text">
-                        <strong>Capstone Project:</strong> Designed and implemented NLP-based text classification system using scikit-learn and Python to automatically categorize police complaints by crime type. Trained on dataset of 5,000+ labeled complaints, achieving 94% accuracy through feature engineering and ensemble methods.
-                    </div>
+            <div class="highlight-grid">
+                <div class="highlight-item">
+                    <h3>☁️ Data Engineering</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Architected scalable data platforms on Azure using Databricks, ADF, and Synapse for global operations.</p>
                 </div>
-            </div>
-
-            <div class="section">
-                <div class="section-title">Professional Achievements</div>
-                <div class="awards-container">
-                    <div class="award-item">
-                        <div class="award-content">
-                            <div class="award-title">SLB 2024 Q3 Reward of Excellence</div>
-                            <div class="award-year">Aker JV Dataflow Design</div>
-                        </div>
-                    </div>
-                    <div class="award-item">
-                        <div class="award-content">
-                            <div class="award-title">SLB 2023 Q2 Reward of Excellence</div>
-                            <div class="award-year">Large Datasets & GBS Migration</div>
-                        </div>
-                    </div>
-                    <div class="award-item">
-                        <div class="award-content">
-                            <div class="award-title">SLB 2022 H1 Best Team Player Award</div>
-                            <div class="award-year">Platform Automation Initiatives</div>
-                        </div>
-                    </div>
-                    <div class="award-item">
-                        <div class="award-content">
-                            <div class="award-title">SLB 2021 Reward of Excellence 'WoW'</div>
-                            <div class="award-year">Infrastructure Enhancement & CI/CD</div>
-                        </div>
-                    </div>
+                <div class="highlight-item">
+                    <h3>🎯 SRE Excellence</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Designed SLI/SLO frameworks achieving 99% uptime with Dynatrace & Azure Monitor.</p>
                 </div>
-            </div>
-
-            <div class="section">
-                <div class="section-title">Additional Information</div>
-                <div class="additional-grid">
-                    <div class="additional-item">
-                        <div class="additional-label">Languages:</div>
-                        <div class="additional-value">English (Fluent), Hindi (Native)</div>
-                    </div>
-                    <div class="additional-item">
-                        <div class="additional-label">Interests:</div>
-                        <div class="additional-value">Data Architecture, Distributed Systems, Cloud Cost Optimization</div>
-                    </div>
+                <div class="highlight-item">
+                    <h3>💰 Cost Optimization</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Delivered $220K+ in annual savings through strategic cloud migrations and rightsizing.</p>
+                </div>
+                <div class="highlight-item">
+                    <h3>🚀 Innovation</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Pioneered passwordless authentication frameworks and Power BI cost analytics.</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section id="skills">
+        <div class="section-header reveal">
+            <h2 class="section-title">Technical Arsenal</h2>
+            <p style="color: var(--text-muted);">Full-stack data platform engineering with reliability at the core</p>
+        </div>
+        
+        <div class="skills-container reveal">
+            <div class="skill-card" data-tilt>
+                <div class="skill-icon">🏗️</div>
+                <h3>Data Engineering</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Azure Data Factory</span>
+                    <span class="skill-tag">Synapse</span>
+                    <span class="skill-tag">Databricks</span>
+                    <span class="skill-tag">Delta Lake</span>
+                    <span class="skill-tag">PySpark</span>
+                    <span class="skill-tag">Data Modeling</span>
+                </div>
+            </div>
+
+            <div class="skill-card" data-tilt>
+                <div class="skill-icon">🛡️</div>
+                <h3>SRE & DevOps</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">SLI/SLO Design</span>
+                    <span class="skill-tag">CI/CD (YAML)</span>
+                    <span class="skill-tag">Disaster Recovery</span>
+                    <span class="skill-tag">IaC</span>
+                    <span class="skill-tag">Azure DevOps</span>
+                </div>
+            </div>
+
+            <div class="skill-card" data-tilt>
+                <div class="skill-icon">📊</div>
+                <h3>Observability</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Dynatrace</span>
+                    <span class="skill-tag">Azure Monitor</span>
+                    <span class="skill-tag">Log Analytics</span>
+                    <span class="skill-tag">Power BI Premium</span>
+                    <span class="skill-tag">DAX</span>
+                </div>
+            </div>
+
+            <div class="skill-card" data-tilt>
+                <div class="skill-icon">💻</div>
+                <h3>Automation</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">PowerShell</span>
+                    <span class="skill-tag">Azure Functions</span>
+                    <span class="skill-tag">Logic Apps</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="section-header reveal">
+            <h2 class="section-title">Career Trajectory</h2>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Data Engineer</div>
+                            <div class="exp-company">BP</div>
+                        </div>
+                        <div class="exp-date">Sep 2025 – Present</div>
+                    </div>
+                    <ul class="exp-achievements">
+                        <li>Architecting scalable ELT frameworks on Azure medallion architecture with Databricks, Delta Lake, ADLS Gen2, and Synapse.</li>
+                        <li>Standardizing reusable ingestion templates with parameterized notebooks and idempotent upserts, improving delivery efficiency by <span class="metric">40%</span>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Data Engineer II</div>
+                            <div class="exp-company">SLB (Schlumberger)</div>
+                        </div>
+                        <div class="exp-date">Nov 2023 – Sep 2025</div>
+                    </div>
+                    <ul class="exp-achievements">
+                        <li>Re-engineered 90+ legacy Power BI dataflows into ADF + Delta Lake, processing <span class="metric">10TB+</span> monthly, reducing latency by <span class="metric">30%</span>.</li>
+                        <li>Built capacity utilization analytics enabling <span class="metric">$12K/month</span> in rightsizing savings across 10 Premium workspaces.</li>
+                        <li>Implemented passwordless authentication using Azure Managed Identity across 200+ data assets.</li>
+                        <li>Improved semantic model refresh reliability by <span class="metric">95%</span> through automated Logic App incident creation.</li>
+                        <li>Established SLOs and automated incident alerts, reducing MTTR from 2 days to 8 hours.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Data Engineer</div>
+                            <div class="exp-company">SLB (Schlumberger)</div>
+                        </div>
+                        <div class="exp-date">Mar 2022 – Nov 2023</div>
+                    </div>
+                    <ul class="exp-achievements">
+                        <li>Migrated workloads to Synapse Serverless, improving performance by <span class="metric">25%</span>.</li>
+                        <li>Decommissioned 5 Azure Analysis Services instances, saving <span class="metric">$20K/month</span>.</li>
+                        <li>Optimized warehouse queries from 60 mins to 2 mins via hash distribution and indexing strategies.</li>
+                        <li>Developed custom monitoring for Premium capacities reducing incident detection time by <span class="metric">40%</span>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Associate Data Engineer</div>
+                            <div class="exp-company">SLB (Schlumberger)</div>
+                        </div>
+                        <div class="exp-date">Oct 2020 – Feb 2022</div>
+                    </div>
+                    <ul class="exp-achievements">
+                        <li>Implemented end-to-end CI/CD in Azure DevOps for 50+ projects, reducing deployment time from days to hours.</li>
+                        <li>Migrated Power BI workloads to Shared Capacities, saving <span class="metric">$200K/year</span>.</li>
+                        <li>Hardened IAM and RBAC with least-privilege roles across the data plane.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="awards">
+        <div class="section-header reveal">
+            <h2 class="section-title">Awards & Education</h2>
+        </div>
+        <div class="awards-grid reveal">
+            <div class="award-card">
+                <div style="font-size: 2rem; margin-bottom: 10px;">🏆</div>
+                <h3>SLB Reward of Excellence</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Q3 2024 & Q2 2023</p>
+                <p style="font-size: 0.9rem; margin-top: 10px;">For delivering enterprise cost analytics and re-engineering 10TB+ scale pipelines.</p>
+            </div>
+            <div class="award-card">
+                <div style="font-size: 2rem; margin-bottom: 10px;">🌟</div>
+                <h3>Best Team Player</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">H1 2022</p>
+                <p style="font-size: 0.9rem; margin-top: 10px;">Honored for cross-functional delivery across data, SRE, and BI teams.</p>
+            </div>
+            <div class="award-card">
+                <div style="font-size: 2rem; margin-bottom: 10px;">🎓</div>
+                <h3>B.Tech, Info Tech</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">COEP (2016-2020)</p>
+                <p style="font-size: 0.9rem; margin-top: 10px;">CGPA: 8.46 | Capstone: NLP Police Complaint Classifier (99.2% Accuracy).</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="reveal" style="text-align: center;">
+            <h2 class="section-title">Let's Build Something Resilient</h2>
+            <p style="color: var(--text-muted); margin-bottom: 40px;">Open to opportunities in Azure, Databricks, Lakehouse, and Reliability Engineering.</p>
+            
+            <div class="contact-links">
+                <a href="mailto:vickydhanwani11@gmail.com" class="contact-btn">
+                    <span>✉️</span> Email Me
+                </a>
+                <a href="https://linkedin.com/in/vikram-dhanwani" target="_blank" class="contact-btn">
+                    <span>🔗</span> LinkedIn
+                </a>
+                <a href="https://github.com/VickyDhanwani" target="_blank" class="contact-btn">
+                    <span>💻</span> GitHub
+                </a>
+                <a href="tel:+917350632588" class="contact-btn">
+                    <span>📱</span> +91-7350632588
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Vikram Dhanwani. Built with resilience in Pune, India.</p>
+    </footer>
+
+    <script>
+        // 1. Scroll Reveal Logic
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+
+            revealElements.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add("active");
+                }
+            });
+        };
+
+        window.addEventListener("scroll", revealOnScroll);
+        // Trigger once on load
+        revealOnScroll();
+
+        // 2. Vanilla 3D Tilt Effect
+        // Disabled on touch devices for smoother scrolling
+        if (window.matchMedia("(hover: hover)").matches) {
+            const tiltElements = document.querySelectorAll('[data-tilt]');
+
+            tiltElements.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = ((y - centerY) / centerY) * -10; // Max rotation deg
+                    const rotateY = ((x - centerX) / centerX) * 10;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                });
+            });
+        }
+
+        // 3. Navigation Active State
+        const sections = document.querySelectorAll('section');
+        const navLi = document.querySelectorAll('nav ul li a');
+
+        window.onscroll = () => {
+            revealOnScroll(); // Keep reveal logic running
+            
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 300) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLi.forEach((a) => {
+                a.classList.remove("active");
+                if (a.getAttribute("href").includes(current)) {
+                    a.classList.add("active");
+                }
+            });
+        };
+    </script>
 </body>
 </html>
