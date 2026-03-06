@@ -420,6 +420,8 @@
                         <li>Optimized high-volume Spark ingestion pipelines, slashing data load times by <span class="metrics-highlight">80% (from 15 hours to 3 hours)</span> by optimizing JDBC read/write options—leveraging parallel partitioning, fetch-size tuning and fine-tuning Databricks cluster settings</li>
                         <li>Refactored a Scala-based ingestion framework to support dynamic Spark JDBC read/write options via metadata, enabling teams to optimize I/O concurrency and partitioning at runtime without code changes.</li>
                         <li>Developed a robust validation suite for high-dimensional business data, automating the verification of complex join logic and data flattening processes. Eliminated manual QA bottlenecks by implementing programmatic checks for pivots and cross-entity consistency, ensuring seamless data flow to downstream consumers.</li>
+                        <li>Implemented a Databricks ingestion framework for Salesforce via REST API, including pagination, JWT and private-key authentication, and incremental transformations.</li>
+                        <li>Built and productionized a Spark Structured Streaming pipeline ingesting data from 16+ IoT sensors via Azure Event Hubs into Databricks; delivered a parameterized JAR used by multiple teams.</li>
                     </ul>
                 </div>
 
