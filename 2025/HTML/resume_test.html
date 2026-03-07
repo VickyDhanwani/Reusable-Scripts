@@ -139,6 +139,22 @@ padding:14px;
 border-left:3px solid #2a5298;
 }
 
+.contact-link {
+    color: white !important;
+    text-decoration: none;
+}
+
+/* This keeps it white after it has been clicked */
+.contact-link:visited {
+    color: white !important;
+}
+
+/* Optional: a slight color change on hover so the user knows it's interactive */
+.contact-link:hover {
+    color: #e0e0e0;
+    text-decoration: underline;
+}
+
 </style>
 </head>
 
@@ -151,7 +167,10 @@ border-left:3px solid #2a5298;
 <div class="title">Data Engineer</div>
 <div class="contact-bar">
 Pune, India | vickydhanwani11@gmail.com | +91-7350632588 |
-linkedin.com/in/vikram-dhanwani
+<a href="https://www.linkedin.com/in/vikram-dhanwani/" 
+     class="contact-link"
+     target="_blank" 
+     rel="noopener noreferrer">linkedin.com/in/vikram-dhanwani</a>
 </div>
 </div>
 
